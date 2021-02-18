@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cmake -S . -G "Unix Makefiles" -B build -D CMAKE_BUILD_TYPE=DEBUG -D CMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+cp build/compile_commands.json .
