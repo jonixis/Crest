@@ -9,11 +9,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/Debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/Release)
 
 file(GLOB src_files "${src_dir}/*.cpp")
+file(GLOB vendor_files "${src_dir}/vendor/*.cpp")
 
-add_executable(${PROJECT_NAME} ${src_files})
+add_executable(${PROJECT_NAME} ${src_files} ${vendor_files})
 
 # Headers
-target_include_directories(${PROJECT_NAME} PRIVATE ${src_dir})
+target_include_directories(${PROJECT_NAME} PRIVATE ${src_dir} ${src_dir}/vendor)
 
 # Dependencies
 
