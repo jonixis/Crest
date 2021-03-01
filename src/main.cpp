@@ -9,6 +9,7 @@
 #include <VertexBufferLayout.h>
 #include <Shader.h>
 #include "Texture.h"
+#include "glm/ext/matrix_clip_space.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -73,9 +74,12 @@ int main(void) {
 
     IndexBuffer ib(indices, 6);
 
+    glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+
     Shader shader("res/shaders/basic.shader");
     shader.bind();
     shader.setUniform4f("u_color", 0.8f, 0.2f, 0.8f, 1.0f);
+    shader.setUniformMat4f("u_MVP", proj);
 
     Texture texture("res/textures/logo.png");
     texture.bind();
