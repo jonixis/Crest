@@ -25,3 +25,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE glad)
 ## GLFW
 add_subdirectory(${lib_dir}/glfw)
 target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
+
+# GLM
+add_subdirectory(${lib_dir}/glm)
+target_link_libraries(${PROJECT_NAME} PRIVATE glm)
