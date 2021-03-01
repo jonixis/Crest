@@ -10,8 +10,8 @@ out vec2 v_texCoord;
 
 void main()
 {
-  gl_Position = u_MVP * position;
   v_texCoord = texCoord;
+  gl_Position = u_MVP * position;
 }
 
 
@@ -27,6 +27,7 @@ uniform sampler2D u_texture;
 
 void main()
 {
+  vec4 fragColor = u_color;
   vec4 texColor = texture(u_texture, v_texCoord);
-  color = texColor;
+  color = texColor * fragColor.r;
 }

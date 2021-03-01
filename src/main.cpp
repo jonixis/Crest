@@ -10,6 +10,7 @@
 #include <Shader.h>
 #include "Texture.h"
 #include "glm/ext/matrix_clip_space.hpp"
+#include "glm/ext/matrix_transform.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -75,11 +76,15 @@ int main(void) {
     IndexBuffer ib(indices, 6);
 
     glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f, 0, 0));
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0.5f, 0));
+
+    glm::mat4 mvp = proj * view * model;
 
     Shader shader("res/shaders/basic.shader");
     shader.bind();
     shader.setUniform4f("u_color", 0.8f, 0.2f, 0.8f, 1.0f);
-    shader.setUniformMat4f("u_MVP", proj);
+    shader.setUniformMat4f("u_MVP", mvp);
 
     Texture texture("res/textures/logo.png");
     texture.bind();
@@ -94,7 +99,7 @@ int main(void) {
     Renderer renderer;
 
     float r = 0.0f;
-    float increment = 0.05f;
+    float increment = 0.01f;
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
       // /* Render here */
@@ -106,10 +111,8 @@ int main(void) {
 
       renderer.draw(va, ib, shader);
 
-      if (r > 1.0f)
-        increment = -0.05f;
-      else if (r < 0.0f)
-        increment = 0.05f;
+      if (r > 1.0f || r < 0.0f)
+        increment *= -1.0f;
 
       r += increment;
 
