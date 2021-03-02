@@ -9,15 +9,15 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/Debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/Release)
 
 file(GLOB src_files "${src_dir}/*.cpp")
+file(GLOB demo_files "${src_dir}/demos/*.cpp")
 file(GLOB vendor_files "${src_dir}/vendor/*/*.cpp")
 
-add_executable(${PROJECT_NAME} ${src_files} ${vendor_files})
+add_executable(${PROJECT_NAME} ${src_files} ${vendor_files} ${demo_files})
 
 # Headers
-target_include_directories(${PROJECT_NAME} PRIVATE ${src_dir} ${src_dir}/vendor/imgui ${src_dir}/vendor/stb_image)
+target_include_directories(${PROJECT_NAME} PRIVATE ${src_dir} ${src_dir}/vendor/imgui ${src_dir}/vendor/stb_image ${src_dir}/demos)
 
 # Dependencies
-
 ## GLAD
 add_subdirectory(${lib_dir}/glad)
 target_link_libraries(${PROJECT_NAME} PRIVATE glad)
