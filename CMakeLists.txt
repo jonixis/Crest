@@ -9,12 +9,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/Debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/Release)
 
 file(GLOB src_files "${src_dir}/*.cpp")
-file(GLOB vendor_files "${src_dir}/vendor/*.cpp")
+file(GLOB vendor_files "${src_dir}/vendor/*/*.cpp")
 
 add_executable(${PROJECT_NAME} ${src_files} ${vendor_files})
 
 # Headers
-target_include_directories(${PROJECT_NAME} PRIVATE ${src_dir} ${src_dir}/vendor)
+target_include_directories(${PROJECT_NAME} PRIVATE ${src_dir} ${src_dir}/vendor/imgui ${src_dir}/vendor/stb_image)
 
 # Dependencies
 
@@ -29,3 +29,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE glfw)
 # GLM
 add_subdirectory(${lib_dir}/glm)
 target_link_libraries(${PROJECT_NAME} PRIVATE glm)
+
+# IMGUI
+add_subdirectory(${lib_dir}/imgui)
+target_link_libraries(${PROJECT_NAME} PRIVATE dear_imgui)
