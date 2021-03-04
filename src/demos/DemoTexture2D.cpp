@@ -9,7 +9,7 @@
 #include <memory>
 
 namespace Demo {
-  DemoTexture2D::DemoTexture2D() : m_proj(glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f)), m_view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))), m_translation(0.0f, 0.0f, 0.0f) {
+  DemoTexture2D::DemoTexture2D(const Settings& settings) : Demo(settings), m_proj(glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f)), m_view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))), m_translation(0.0f, 0.0f, 0.0f) {
 
     float positions[] = {
       -0.5f, -0.5f, 0.0f, 0.0f, // index 0

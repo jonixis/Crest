@@ -1,20 +1,19 @@
 #pragma once
 
+#include "Camera.h"
 #include "Demo.h"
-#include "glm/glm.hpp"
-#include "VertexBuffer.h"
-#include "VertexArray.h"
 #include "IndexBuffer.h"
-#include "Texture.h"
 #include "Shader.h"
-
+#include "Texture.h"
+#include "VertexArray.h"
 #include <memory>
+#include "FlightCamera.h"
 
 namespace Demo {
-	class DemoTexture2D : public Demo {
+	class DemoCube : public Demo {
 	public:
-		DemoTexture2D(const Settings& settings);
-		~DemoTexture2D();
+    DemoCube(const Settings& settings);
+		~DemoCube();
 
 		void onUpdate(float deltaTime) override;
 		void onRender() override;
@@ -26,8 +25,8 @@ namespace Demo {
     std::unique_ptr<Shader> m_shader;
     std::unique_ptr<Texture> m_texture;
 
-    glm::mat4 m_proj, m_view;
-    glm::vec3 m_translation;
+    FlightCamera m_camera;
+
 	};
 
 }

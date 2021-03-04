@@ -2,12 +2,18 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <Renderer.h>
+#include "Demo.h"
+#include "DemoCube.h"
+#include "glm/fwd.hpp"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "demos/DemoMenu.h"
 #include "demos/DemoClearColor.h"
 #include "demos/DemoTexture2D.h"
+
+const unsigned int WINDOW_WIDTH = 800;
+const unsigned int WINDOW_HEIGHT = 600;
 
 int main(void) {
   GLFWwindow* window;
@@ -21,7 +27,7 @@ int main(void) {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	// glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Macos compatibility?
 
-  window = glfwCreateWindow(800, 600, "Crest", NULL, NULL);
+  window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Crest", NULL, NULL);
   if (!window) {
     std::cout << "Failed to create GLFW window" << std::endl;
     glfwTerminate();
@@ -48,12 +54,21 @@ int main(void) {
   ImGui_ImplOpenGL3_Init((char *)glGetString(410)); // workaround: hard coded glsl version
   ImGui::StyleColorsDark();
 
+  /* Initalize demos */
   Demo::Demo* currentDemo = nullptr;
   Demo::DemoMenu* demoMenu = new Demo::DemoMenu(currentDemo);
   currentDemo = demoMenu;
 
-  demoMenu->registerDemo<Demo::DemoClearColor>("Clear Color");
-  demoMenu->registerDemo<Demo::DemoTexture2D>("2D Texture");
+  glm::uvec2 viewPortSize = glm::uvec2(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+  Demo::Settings demoClearColorSettings("Clear Color", viewPortSize);
+  demoMenu->registerDemo<Demo::DemoClearColor>(demoClearColorSettings);
+
+  Demo::Settings demoTexture2DSettings("Texture 2D", viewPortSize);
+  demoMenu->registerDemo<Demo::DemoTexture2D>(demoTexture2DSettings);
+
+  Demo::Settings demoCubeSettings("Cube", viewPortSize);
+  demoMenu->registerDemo<Demo::DemoCube>(demoCubeSettings);
 
   /* RENDER LOOP */
   while (!glfwWindowShouldClose(window)) {

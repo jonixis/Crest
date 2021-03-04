@@ -5,7 +5,7 @@
 namespace Demo {
 	class DemoClearColor : public Demo {
 	public:
-		DemoClearColor();
+		DemoClearColor(const Settings& settings);
 		~DemoClearColor();
 
 		void onUpdate(float deltaTime) override;

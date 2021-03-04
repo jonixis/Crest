@@ -3,7 +3,7 @@
 #include "imgui.h"
 
 namespace Demo {
-  DemoClearColor::DemoClearColor() : m_clearColor{0.2f, 0.3f, 0.8f, 1.0f} {
+  DemoClearColor::DemoClearColor(const Settings& settings) : Demo(settings), m_clearColor{0.2f, 0.3f, 0.8f, 1.0f} {
 
   }
 
