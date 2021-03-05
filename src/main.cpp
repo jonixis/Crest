@@ -12,8 +12,8 @@
 #include "demos/DemoClearColor.h"
 #include "demos/DemoTexture2D.h"
 
-const unsigned int WINDOW_WIDTH = 800;
-const unsigned int WINDOW_HEIGHT = 600;
+const unsigned int WINDOW_WIDTH = 1920;
+const unsigned int WINDOW_HEIGHT = 1080;
 
 int main(void) {
   GLFWwindow* window;

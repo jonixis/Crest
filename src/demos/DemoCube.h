@@ -10,6 +10,18 @@
 #include "FlightCamera.h"
 #include "Renderer.h"
 
+struct PointLight {
+  glm::vec3 position;
+
+  glm::vec3 ambient;
+  glm::vec3 diffuse;
+  glm::vec3 specular;
+
+  float constant;
+  float linear;
+  float quadratic;
+};
+
 namespace Demo {
 	class DemoCube : public Demo {
 	public:
@@ -24,13 +36,14 @@ namespace Demo {
 	private:
 
     Renderer m_renderer;
+    FlightCamera m_camera;
 
     std::unique_ptr<VertexArray> m_VAO;
     std::unique_ptr<VertexBuffer> m_VBO;
     std::unique_ptr<IndexBuffer> m_IBO;
     std::unique_ptr<Shader> m_shader;
 
-    FlightCamera m_camera;
+    PointLight m_pointLight;
 
     float m_rotationX = 0.0f;
     float m_rotationY = 0.0f;

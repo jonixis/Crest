@@ -93,9 +93,19 @@ namespace Demo {
     m_VAO->addBuffer(*m_VBO, layout);
     m_IBO = std::make_unique<IndexBuffer>(indices, 36);
 
+    m_pointLight.position = glm::vec3(0.0f, 3.0f, 0.0f);
+
+    m_pointLight.ambient = glm::vec3(0.1f, 0.1f, 0.1f);
+    m_pointLight.diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
+    m_pointLight.specular = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    m_pointLight.constant = 1.0f;
+    m_pointLight.linear = 0.045f;
+    m_pointLight.quadratic = 0.0075f;
+
     m_shader = std::make_unique<Shader>("res/shaders/cube");
     m_shader->bind();
-    m_shader->setUniform4f("u_color", 0.8f, 0.2f, 0.8f, 1.0f);
+    m_shader->setUniform3f("u_color", 0.8f, 0.2f, 0.8f);
 
     m_camera = FlightCamera(m_settings.viewPortSize, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f));
   }
@@ -122,8 +132,20 @@ namespace Demo {
 
     glm::mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
 
+    // Transformations
     m_shader->bind();
+    m_shader->setUniformMat4f("u_modelMatrix", modelMatrix);
     m_shader->setUniformMat4f("u_MVP", mvp);
+
+    // Lighting
+    m_shader->setUniform3f("u_pointLight.position", m_pointLight.position.x, m_pointLight.position.y, m_pointLight.position.z);
+    m_shader->setUniform3f("u_pointLight.ambient", m_pointLight.ambient.x, m_pointLight.ambient.y, m_pointLight.ambient.z);
+    m_shader->setUniform3f("u_pointLight.diffuse", m_pointLight.diffuse.x, m_pointLight.diffuse.y, m_pointLight.diffuse.z);
+    m_shader->setUniform3f("u_pointLight.specular", m_pointLight.specular.x, m_pointLight.specular.y, m_pointLight.specular.z);
+    m_shader->setUniform1f("u_pointLight.constant", m_pointLight.constant);
+    m_shader->setUniform1f("u_pointLight.linear", m_pointLight.linear);
+    m_shader->setUniform1f("u_pointLight.quadratic", m_pointLight.quadratic);
+
 
     m_renderer.draw(*m_VAO, *m_IBO, *m_shader);
   }
@@ -131,10 +153,15 @@ namespace Demo {
   void DemoCube::onImGuiRender() {
       ImGui::Text("DemoCube");
       ImGui::NewLine();
-      ImGui::Text("Rotation");
+
+      ImGui::Text("Cube - Rotation");
       ImGui::SliderFloat("X - Axis", &m_rotationX, -360.0f, 360.0f);
       ImGui::SliderFloat("Y - Axis", &m_rotationY, -360.0f, 360.0f);
       ImGui::SliderFloat("Z - Axis", &m_rotationZ, -360.0f, 360.0f);
+
+      ImGui::Text("Lighting");
+      ImGui::SliderFloat3("Position", &m_pointLight.position.x, -10.0f, 10.0f);
+
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
   }
 }
