@@ -22,24 +22,28 @@ ShaderProgramSource Shader::parseShader(const std::string& filepath) {
     NONE = -1, VERTEX = 0, FRAGMENT = 1
   };
 
-  std::ifstream stream(filepath);
+  std::string vertexFilePath = filepath + ".vert";
+  std::string fragmentFilePath = filepath + ".frag";
+
 
   std::string line;
   std::stringstream ss[2];
-  ShaderType type = ShaderType::NONE;
-  while (getline(stream, line)) {
-    if (line.find("#shader") != std::string::npos) {
-      if (line.find("vertex") != std::string::npos)
-        type = ShaderType::VERTEX;
-      else if (line.find("fragment") != std::string::npos)
-        type = ShaderType::FRAGMENT;
-    }
-    else {
-      ss[(int)type] << line << "\n";
-    }
+  ShaderType type = ShaderType::VERTEX;
+
+  for (auto& shader : ss) {
+
+      std::ifstream stream = type == ShaderType::VERTEX
+        ? std::ifstream(vertexFilePath)
+        : std::ifstream(fragmentFilePath);
+
+      while (getline(stream, line)) {
+        shader << line << "\n";
+      }
+
+      type = ShaderType::FRAGMENT;
   }
 
-  return { ss[0].str(), ss[1].str() };
+  return { ss[(int)ShaderType::VERTEX].str(), ss[(int)ShaderType::FRAGMENT].str() };
 }
 
 unsigned int Shader::compileShader(unsigned int type, const std::string& source) {
