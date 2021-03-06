@@ -104,10 +104,9 @@ namespace Demo {
     m_pointLight.quadratic = 0.0075f;
 
     m_material.shininess = 64.0f;
+    m_material.color = glm::vec3(0.8f, 0.2f, 0.8f);
 
     m_shader = std::make_unique<Shader>("res/shaders/cube");
-    m_shader->bind();
-    m_shader->setUniform3f("u_color", 0.8f, 0.2f, 0.8f);
 
     m_camera = FlightCamera(m_settings.viewPortSize, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -149,6 +148,7 @@ namespace Demo {
     m_shader->setUniform1f("u_pointLight.quadratic", m_pointLight.quadratic);
 
     // Material
+    m_shader->setUniform3f("u_color", m_material.color.x, m_material.color.y, m_material.color.z);
     m_shader->setUniform1f("u_material.shininess", m_material.shininess);
 
     // Camera
@@ -172,6 +172,7 @@ namespace Demo {
 
       ImGui::Text("Material");
       ImGui::SliderFloat("Shininess", &m_material.shininess, 1.0, 256);
+      ImGui::ColorEdit3("Color", &m_material.color.x);
 
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
   }
