@@ -22,6 +22,10 @@ struct PointLight {
   float quadratic;
 };
 
+struct Material {
+  float shininess;
+};
+
 namespace Demo {
 	class DemoCube : public Demo {
 	public:
@@ -44,6 +48,7 @@ namespace Demo {
     std::unique_ptr<Shader> m_shader;
 
     PointLight m_pointLight;
+    Material m_material;
 
     float m_rotationX = 0.0f;
     float m_rotationY = 0.0f;

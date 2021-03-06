@@ -10,6 +10,7 @@ class Camera {
 
 	virtual void update() = 0;
 
+  const glm::vec3& getPosition() const { return m_position; }
 	const glm::mat4& getViewMatrix() const { return m_viewMatrix; }
 	const glm::mat4& getProjectionMatrix() const { return m_projecionMatrix; }
 

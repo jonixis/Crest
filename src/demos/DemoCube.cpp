@@ -93,7 +93,7 @@ namespace Demo {
     m_VAO->addBuffer(*m_VBO, layout);
     m_IBO = std::make_unique<IndexBuffer>(indices, 36);
 
-    m_pointLight.position = glm::vec3(0.0f, 3.0f, 0.0f);
+    m_pointLight.position = glm::vec3(0.0f, 3.0f, 1.0f);
 
     m_pointLight.ambient = glm::vec3(0.1f, 0.1f, 0.1f);
     m_pointLight.diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
@@ -103,11 +103,16 @@ namespace Demo {
     m_pointLight.linear = 0.045f;
     m_pointLight.quadratic = 0.0075f;
 
+    m_material.shininess = 64.0f;
+
     m_shader = std::make_unique<Shader>("res/shaders/cube");
     m_shader->bind();
     m_shader->setUniform3f("u_color", 0.8f, 0.2f, 0.8f);
 
     m_camera = FlightCamera(m_settings.viewPortSize, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+
+    m_rotationX = 30.0f;
+    m_rotationY = 45.0f;
   }
 
   DemoCube::~DemoCube() {
@@ -119,9 +124,6 @@ namespace Demo {
   }
 
   void DemoCube::onRender() {
-    GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-    GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
     glm::mat4 modelMatrix = glm::mat4(1.0f);
     modelMatrix = glm::rotate(modelMatrix, glm::radians(m_rotationX), glm::vec3(1.0f, 0.0f, 0.0f));
     modelMatrix = glm::rotate(modelMatrix, glm::radians(m_rotationY), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -146,6 +148,12 @@ namespace Demo {
     m_shader->setUniform1f("u_pointLight.linear", m_pointLight.linear);
     m_shader->setUniform1f("u_pointLight.quadratic", m_pointLight.quadratic);
 
+    // Material
+    m_shader->setUniform1f("u_material.shininess", m_material.shininess);
+
+    // Camera
+    m_shader->setUniform3f("u_camPos", m_camera.getPosition().x, m_camera.getPosition().y, m_camera.getPosition().z);
+
 
     m_renderer.draw(*m_VAO, *m_IBO, *m_shader);
   }
@@ -161,6 +169,9 @@ namespace Demo {
 
       ImGui::Text("Lighting");
       ImGui::SliderFloat3("Position", &m_pointLight.position.x, -10.0f, 10.0f);
+
+      ImGui::Text("Material");
+      ImGui::SliderFloat("Shininess", &m_material.shininess, 1.0, 256);
 
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
   }
