@@ -1,32 +1,43 @@
 #include <glad/glad.h>
-#define GL_SILENCE_DEPRECATION
-
-#include <iostream>
 #include <GLFW/glfw3.h>
+#include <iostream>
+
+#include <imgui.h>
+
+#include "DemoMenu.h"
+#include "DemoClearColor.h"
+#include "DemoTexture2D.h"
+#include "DemoCube.h"
+
+#include "vendor/imgui/imgui_impl_glfw.h"
+#include "vendor/imgui/imgui_impl_opengl3.h"
+
+#include "Renderer.h"
+
+const unsigned int WINDOW_WIDTH = 1920;
+const unsigned int WINDOW_HEIGHT = 1080;
 
 int main(void) {
   GLFWwindow* window;
 
-  /* Initialize the library */
   if (!glfwInit())
     return -1;
 
   /* Configure glfw */
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Macos compatibility?
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // Macos compatibility?
 
-  /* Create a windowed mode window and its OpenGL context */
-  window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
+  window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Crest", NULL, NULL);
   if (!window) {
     std::cout << "Failed to create GLFW window" << std::endl;
     glfwTerminate();
     return -1;
   }
 
-  /* Make the window's context current */
   glfwMakeContextCurrent(window);
+  glfwSwapInterval(1);
 
   /* Load glad (extension loader library for modern OpenGL) */
   if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
@@ -34,23 +45,70 @@ int main(void) {
     return -1;
   }
 
-  const GLubyte* renderer = glGetString(GL_RENDERER);
-  const GLubyte* version = glGetString(GL_VERSION);
-  std::cout << "Renderer: " << renderer << std::endl;
-  std::cout << "OpenGL version: " << version << std::endl;
+  std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
+  std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
 
-  /* Loop until the user closes the window */
+  Renderer renderer;
+
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGui_ImplGlfw_InitForOpenGL(window, true);
+  ImGui_ImplOpenGL3_Init((char *)glGetString(410)); // workaround: hard coded glsl version
+  ImGui::StyleColorsDark();
+
+  /* Initalize demos */
+  Demo::Demo* currentDemo = nullptr;
+  Demo::DemoMenu* demoMenu = new Demo::DemoMenu(currentDemo);
+  currentDemo = demoMenu;
+
+  glm::uvec2 viewPortSize = glm::uvec2(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+  Demo::Settings demoClearColorSettings("Clear Color", viewPortSize);
+  demoMenu->registerDemo<Demo::DemoClearColor>(demoClearColorSettings);
+
+  Demo::Settings demoTexture2DSettings("Texture 2D", viewPortSize);
+  demoMenu->registerDemo<Demo::DemoTexture2D>(demoTexture2DSettings);
+
+  Demo::Settings demoCubeSettings("Cube", viewPortSize);
+  demoMenu->registerDemo<Demo::DemoCube>(demoCubeSettings);
+
+  /* RENDER LOOP */
   while (!glfwWindowShouldClose(window)) {
-    // /* Render here */
-    glClear(GL_COLOR_BUFFER_BIT);
 
-    /* Swap front and back buffers */
+    GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    renderer.clear();
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    if (currentDemo) {
+      currentDemo->onUpdate(0.0f);
+      currentDemo->onRender();
+      ImGui::Begin("Demos");
+      if (currentDemo != demoMenu && ImGui::Button("Back")) {
+        delete currentDemo;
+        currentDemo = demoMenu;
+      }
+
+      currentDemo->onImGuiRender();
+      ImGui::End();
+    }
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
     glfwSwapBuffers(window);
 
-    /* Poll for and process events */
     glfwPollEvents();
   }
 
+  delete currentDemo;
+  if (currentDemo != demoMenu)
+    delete demoMenu;
+
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
   glfwTerminate();
   return 0;
 }
