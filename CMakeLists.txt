@@ -51,3 +51,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE dear_imgui)
 ## STB_IMAGE
 add_subdirectory(${libs_dir}/stb_image)
 target_link_libraries(${PROJECT_NAME} PRIVATE stb_image)
+
+## TINY_OBJ_LOADER
+add_subdirectory(${libs_dir}/tinyobjloader)
+target_link_libraries(${PROJECT_NAME} PRIVATE tinyobjloader)
