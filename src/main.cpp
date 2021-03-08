@@ -61,7 +61,9 @@ int main(void) {
   Demo::DemoMenu* demoMenu = new Demo::DemoMenu(currentDemo);
   currentDemo = demoMenu;
 
-  glm::uvec2 viewPortSize = glm::uvec2(WINDOW_WIDTH, WINDOW_HEIGHT);
+  // Set correct viewport size
+  glm::ivec2 viewPortSize;
+  glfwGetFramebufferSize(window, &viewPortSize.x, &viewPortSize.y);
 
   Demo::Settings demoClearColorSettings("Clear Color", viewPortSize);
   demoMenu->registerDemo<Demo::DemoClearColor>(demoClearColorSettings);
