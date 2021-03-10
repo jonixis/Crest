@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <vector>
 
 #include "Renderer.h"
@@ -49,8 +50,8 @@ class VertexBufferLayout {
     m_stride += count * VertexBufferElement::getSizeOfType(GL_UNSIGNED_BYTE);
   }
 
-  inline const std::vector<VertexBufferElement>& getElements() const { return m_elements; }
-  inline unsigned int getStride() const { return m_stride; }
+  const std::vector<VertexBufferElement>& getElements() const { return m_elements; }
+  unsigned int getStride() const { return m_stride; }
 
  private:
 

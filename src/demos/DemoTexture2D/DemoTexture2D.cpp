@@ -34,7 +34,7 @@ namespace Demo {
     VertexBufferLayout layout;
     layout.push<float>(2); // Add vertex positions
     layout.push<float>(2); // Add vertex texture coords
-    m_VAO->addBuffer(*m_VBO, layout);
+    m_VAO->addCustomBuffer(*m_VBO, layout);
     m_IBO = std::make_unique<IndexBuffer>(indices, 6);
 
     m_shader = std::make_unique<Shader>("shaders/basic");
@@ -57,8 +57,6 @@ namespace Demo {
     GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
     GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-    Renderer renderer;
-
     m_texture->bind();
 
     glm::mat4 model = glm::translate(glm::mat4(1.0f), m_translation);
@@ -68,7 +66,7 @@ namespace Demo {
     m_shader->bind();
     m_shader->setUniformMat4f("u_MVP", mvp);
 
-    renderer.draw(*m_VAO, *m_IBO, *m_shader);
+    Renderer::draw(*m_VAO, *m_IBO, *m_shader);
   }
 
   void DemoTexture2D::onImGuiRender() {

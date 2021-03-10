@@ -13,8 +13,8 @@ class Texture {
   void bind(unsigned int slot = 0) const;
   void unbind();
 
-  inline int getWidth() const { return m_width; }
-  inline int getHeight() const { return m_height; }
+  int getWidth() const { return m_width; }
+  int getHeight() const { return m_height; }
 
  private:
 

@@ -8,6 +8,7 @@
 #include <imgui.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <vector>
 
 #include "IndexBuffer.h"
 #include "Renderer.h"
@@ -92,7 +93,7 @@ namespace Demo {
     VertexBufferLayout layout;
     layout.push<float>(3); // Add vertex positions
     layout.push<float>(3); // Add vertex normals
-    m_VAO->addBuffer(*m_VBO, layout);
+    m_VAO->addCustomBuffer(*m_VBO, layout);
     m_IBO = std::make_unique<IndexBuffer>(indices, 36);
 
     m_pointLight.position = glm::vec3(0.0f, 3.0f, 1.0f);
@@ -138,7 +139,7 @@ namespace Demo {
     // Transformations
     m_shader->bind();
     m_shader->setUniformMat4f("u_modelMatrix", modelMatrix);
-    m_shader->setUniformMat4f("u_MVP", mvp);
+    m_shader->setUniformMat4f("u_mvpMatrix", mvp);
 
     // Lighting
     m_shader->setUniform3f("u_pointLight.position", m_pointLight.position.x, m_pointLight.position.y, m_pointLight.position.z);
@@ -157,7 +158,7 @@ namespace Demo {
     m_shader->setUniform3f("u_camPos", m_camera.getPosition().x, m_camera.getPosition().y, m_camera.getPosition().z);
 
 
-    m_renderer.draw(*m_VAO, *m_IBO, *m_shader);
+    Renderer::draw(*m_VAO, *m_IBO, *m_shader);
   }
 
   void DemoCube::onImGuiRender() {

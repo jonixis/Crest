@@ -6,11 +6,11 @@
 #include "Camera.h"
 #include "Demo.h"
 #include "IndexBuffer.h"
+#include "Mesh.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "FlightCamera.h"
-#include "Renderer.h"
 
 struct PointLight {
 
@@ -48,7 +48,6 @@ namespace Demo {
 
    private:
 
-    Renderer m_renderer;
     FlightCamera m_camera;
 
     std::unique_ptr<VertexArray> m_VAO;
