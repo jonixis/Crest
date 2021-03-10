@@ -25,11 +25,12 @@ add_executable(${PROJECT_NAME} ${src_files} ${header_files})
 # Headers
 target_include_directories(${PROJECT_NAME} PRIVATE
   ${src_dir}
+  ${src_dir}/vendor/imgui
   ${src_dir}/demos
   ${src_dir}/demos/DemoClearColor
   ${src_dir}/demos/DemoTexture2D
   ${src_dir}/demos/DemoCube
-  ${src_dir}/vendor/imgui)
+  ${src_dir}/demos/DemoObjLoader)
 
 # Dependencies
 ## GLAD
