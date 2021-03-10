@@ -34,7 +34,7 @@ namespace Demo {
     std::unique_ptr<Model> m_model;
 
     PointLight m_pointLight;
-    Material m_material;
+    DemoMaterial m_material;
 
     glm::vec3 m_position = {0.0f, 0.0f, 0.0f};
     glm::vec3 m_rotation = {0.0f, 0.0f, 0.0f};

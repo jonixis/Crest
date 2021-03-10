@@ -30,7 +30,7 @@ namespace Demo {
     // m_model = std::make_unique<Model>("res/models/newell_teaset/teapot.obj");
     m_model = std::make_unique<Model>("res/models/mandalorian/mando-helmet.obj");
 
-    m_pointLight.position = glm::vec3(0.0f, 3.0f, 1.0f);
+    m_pointLight.position = glm::vec3(0.0f, -1.0f, 15.0f);
 
     m_pointLight.ambient = glm::vec3(0.1f, 0.1f, 0.1f);
     m_pointLight.diffuse = glm::vec3(0.8f, 0.8f, 0.8f);
@@ -43,7 +43,7 @@ namespace Demo {
     m_material.shininess = 64.0f;
     m_material.color = glm::vec3(0.8f, 0.2f, 0.8f);
 
-    m_shader = std::make_shared<Shader>("shaders/cube");
+    m_shader = std::make_shared<Shader>("shaders/blinnPhong");
 
     m_camera = FlightCamera(m_settings.viewPortSize, {0.0f, 0.0f, 40.0f}, {0.0f, 0.0f, 0.0f});
 
@@ -65,10 +65,6 @@ namespace Demo {
     m_shader->setUniform1f("u_pointLight.constant", m_pointLight.constant);
     m_shader->setUniform1f("u_pointLight.linear", m_pointLight.linear);
     m_shader->setUniform1f("u_pointLight.quadratic", m_pointLight.quadratic);
-
-    // Material
-    m_shader->setUniform3f("u_color", m_material.color.x, m_material.color.y, m_material.color.z);
-    m_shader->setUniform1f("u_material.shininess", m_material.shininess);
 
     // Camera
     m_shader->setUniform3f("u_camPos", m_camera.getPosition().x, m_camera.getPosition().y, m_camera.getPosition().z);
@@ -98,9 +94,9 @@ namespace Demo {
       ImGui::Text("Lighting");
       ImGui::SliderFloat3("Light - Position", &m_pointLight.position.x, -40.0f, 40.0f);
 
-      ImGui::Text("Material");
-      ImGui::SliderFloat("Shininess", &m_material.shininess, 1.0, 256);
-      ImGui::ColorEdit3("Color", &m_material.color.x);
+      // ImGui::Text("Material");
+      // ImGui::SliderFloat("Shininess", &m_material.shininess, 1.0, 256);
+      // ImGui::ColorEdit3("Color", &m_material.color.x);
 
       ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
   }

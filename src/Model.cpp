@@ -74,7 +74,7 @@ void Model::loadModel(const std::string &filepath) {
 
   const tinyobj::attrib_t& attrib = reader.GetAttrib();
   const std::vector<tinyobj::shape_t>& shapes = reader.GetShapes();
-  // const std::vector<tinyobj::material_t>& materials = reader.GetMaterials();
+  const std::vector<tinyobj::material_t>& materials = reader.GetMaterials();
 
   // Loop over shapes (mesh)
   for (size_t s = 0; s < shapes.size(); ++s) {
@@ -83,6 +83,9 @@ void Model::loadModel(const std::string &filepath) {
     // Use string encoded indices as key in index map
     // TODO Maybe implement own hash strategy for better performance?
     std::unordered_map<std::string, unsigned int> indexMap;
+
+    // Set material of first face
+    int materialId = shapes[s].mesh.material_ids[0];
 
     // Loop over faces
     size_t indexOffset = 0; // Depends on num of vertices per face
@@ -135,7 +138,32 @@ void Model::loadModel(const std::string &filepath) {
 
       indexOffset += fv;
 
+
+      if (materialId != shapes[s].mesh.material_ids[f])
+        materialId = -1; // Not all faces in mesh have same material -> reset
     }
+
+    if (materialId != -1) {
+      std::shared_ptr<Material> material = std::make_shared<Material>();
+      material->ka = glm::vec3(
+                               materials[materialId].ambient[0],
+                               materials[materialId].ambient[1],
+                               materials[materialId].ambient[2]);
+      material->kd = glm::vec3(
+                               materials[materialId].diffuse[0],
+                               materials[materialId].diffuse[1],
+                               materials[materialId].diffuse[2]);
+      material->ks = glm::vec3(
+                               materials[materialId].specular[0],
+                               materials[materialId].specular[1],
+                               materials[materialId].specular[2]);
+
+      material->ns = materials[materialId].shininess;
+
+      mesh->setMaterial(material);
+      std::cout << "Added material to mesh: " << materials[materialId].name << std::endl;
+    }
+
     addMesh(mesh);
   }
 
