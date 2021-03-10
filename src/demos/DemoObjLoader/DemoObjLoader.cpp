@@ -23,7 +23,12 @@ namespace Demo {
 
     GLCall(glEnable(GL_DEPTH_TEST));
 
-    m_model = std::make_unique<Model>("res/models/utah-teapot/utah-teapot.obj");
+
+    // m_model = std::make_unique<Model>("res/models/utah-teapot/utah-teapot.obj");
+    // m_model = std::make_unique<Model>("res/models/newell_teaset/spoon.obj");
+    // m_model = std::make_unique<Model>("res/models/newell_teaset/teacup.obj");
+    // m_model = std::make_unique<Model>("res/models/newell_teaset/teapot.obj");
+    m_model = std::make_unique<Model>("res/models/mandalorian/mando-helmet.obj");
 
     m_pointLight.position = glm::vec3(0.0f, 3.0f, 1.0f);
 
@@ -40,7 +45,7 @@ namespace Demo {
 
     m_shader = std::make_shared<Shader>("shaders/cube");
 
-    m_camera = FlightCamera(m_settings.viewPortSize, glm::vec3(0.0f, 0.0f, 40.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+    m_camera = FlightCamera(m_settings.viewPortSize, {0.0f, 0.0f, 40.0f}, {0.0f, 0.0f, 0.0f});
 
   }
 
