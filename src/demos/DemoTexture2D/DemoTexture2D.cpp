@@ -37,7 +37,7 @@ namespace Demo {
     m_VAO->addCustomBuffer(*m_VBO, layout);
     m_IBO = std::make_unique<IndexBuffer>(indices, 6);
 
-    m_shader = std::make_unique<Shader>("shaders/basic");
+    m_shader = std::make_unique<Shader>("shaders/texture");
     m_shader->bind();
     m_shader->setUniform4f("u_color", 0.8f, 0.2f, 0.8f, 1.0f);
 

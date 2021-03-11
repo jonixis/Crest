@@ -6,12 +6,11 @@
 #include "Demo.h"
 #include "IndexBuffer.h"
 #include "Model.h"
+#include "PointLight.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "VertexArray.h"
 #include "FlightCamera.h"
-
-#include "DemoCube.h" // TODO workaround because of pointlight and material redefiniton
 
 namespace Demo {
 
@@ -30,15 +29,17 @@ namespace Demo {
 
     FlightCamera m_camera;
 
-    std::shared_ptr<Shader> m_shader;
+    std::shared_ptr<Shader> m_modelShader;
+    std::shared_ptr<Shader> m_lightShader;
     std::unique_ptr<Model> m_model;
 
-    PointLight m_pointLight;
-    DemoMaterial m_material;
+    std::unique_ptr<PointLight> m_pointLight;
 
     glm::vec3 m_position = {0.0f, 0.0f, 0.0f};
     glm::vec3 m_rotation = {0.0f, 0.0f, 0.0f};
     float m_scale = 1.0f;
+
+    glm::vec3 m_pointLightPosition = {0.0f, 0.0f, 0.0f};
 
   };
 

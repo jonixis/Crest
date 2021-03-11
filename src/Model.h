@@ -16,14 +16,14 @@ class Model {
   Model(const std::string& filepath);
   ~Model();
 
-  void draw(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix, std::shared_ptr<Shader> shader) const;
+  void draw(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix, std::shared_ptr<Shader> shader, bool useMaterial = true) const;
 
   void setPosition(const glm::vec3& position);
   void setRotation(const glm::vec3& rotation);
   void setScale(const glm::vec3& scale);
 
-  const glm::mat4 getModelMatrix() const { return m_modelMatrix; }
-  const glm::mat4 getNormalMatrix() const { return m_normalMatrix; }
+  const glm::mat4& getModelMatrix() const { return m_modelMatrix; }
+  const glm::mat3& getNormalMatrix() const { return m_normalMatrix; }
 
  private:
 

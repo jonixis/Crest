@@ -12,7 +12,7 @@
 #include "VertexArray.h"
 #include "FlightCamera.h"
 
-struct PointLight {
+struct DemoPointLight {
 
   glm::vec3 position;
 
@@ -55,7 +55,7 @@ namespace Demo {
     std::unique_ptr<IndexBuffer> m_IBO;
     std::unique_ptr<Shader> m_shader;
 
-    PointLight m_pointLight;
+    DemoPointLight m_pointLight;
     DemoMaterial m_material;
 
     float m_rotationX = 0.0f;

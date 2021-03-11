@@ -32,7 +32,7 @@ class Mesh {
   void addVertex(const Vertex& vertex);
   void addIndex(const unsigned int index);
   void setMaterial(const std::shared_ptr<Material> material);
-  void draw(std::shared_ptr<Shader> shader) const;
+  void draw(std::shared_ptr<Shader> shader, bool useMaterial) const;
 
   unsigned int getNumOfVertices() const;
 
