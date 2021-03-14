@@ -63,16 +63,16 @@ namespace Demo {
     m_modelShader->bind();
 
     // Lighting
-    m_modelShader->setUniform3f("u_pointLight.position", m_pointLight->getPosition().x, m_pointLight->getPosition().y, m_pointLight->getPosition().z);
-    m_modelShader->setUniform3f("u_pointLight.ambient", m_pointLight->getAmbient().x, m_pointLight->getAmbient().y, m_pointLight->getAmbient().z);
-    m_modelShader->setUniform3f("u_pointLight.diffuse", m_pointLight->getDiffuse().x, m_pointLight->getDiffuse().y, m_pointLight->getDiffuse().z);
-    m_modelShader->setUniform3f("u_pointLight.specular", m_pointLight->getSpecular().x, m_pointLight->getSpecular().y, m_pointLight->getSpecular().z);
+    m_modelShader->setUniform3f("u_pointLight.position", m_pointLight->getPosition());
+    m_modelShader->setUniform3f("u_pointLight.ambient", m_pointLight->getAmbient());
+    m_modelShader->setUniform3f("u_pointLight.diffuse", m_pointLight->getDiffuse());
+    m_modelShader->setUniform3f("u_pointLight.specular", m_pointLight->getSpecular());
     m_modelShader->setUniform1f("u_pointLight.constant", m_pointLight->getAttConstant());
     m_modelShader->setUniform1f("u_pointLight.linear", m_pointLight->getAttLinear());
     m_modelShader->setUniform1f("u_pointLight.quadratic", m_pointLight->getAttQuadratic());
 
     // Camera
-    m_modelShader->setUniform3f("u_camPos", m_camera.getPosition().x, m_camera.getPosition().y, m_camera.getPosition().z);
+    m_modelShader->setUniform3f("u_camPos", m_camera.getPosition());
 
     m_modelShader->unbind();
 
@@ -82,7 +82,7 @@ namespace Demo {
   }
 
   void DemoModelLoader::onImGuiRender() {
-      ImGui::Text("DemoObjLoader");
+      ImGui::Text("Demo Model Loader");
       ImGui::NewLine();
 
       ImGui::Text("Transform");

@@ -39,7 +39,7 @@ namespace Demo {
 
     m_shader = std::make_unique<Shader>("shaders/texture");
     m_shader->bind();
-    m_shader->setUniform4f("u_color", 0.8f, 0.2f, 0.8f, 1.0f);
+    m_shader->setUniform4f("u_color", {0.8f, 0.2f, 0.8f, 1.0f});
 
     m_texture = std::make_unique<Texture>("res/textures/logo.png");
     m_shader->setUniform1i("u_texture", 0);

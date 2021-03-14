@@ -45,9 +45,9 @@ void Mesh::draw(std::shared_ptr<Shader> shader, bool useMaterial) const {
   }
 
   if (useMaterial) {
-    shader->setUniform3f("u_material.ka", m_material->ka[0], m_material->ka[1], m_material->ka[2]);
-    shader->setUniform3f("u_material.kd", m_material->kd[0], m_material->kd[1], m_material->kd[2]);
-    shader->setUniform3f("u_material.ks", m_material->ks[0], m_material->ks[1], m_material->ks[2]);
+    shader->setUniform3f("u_material.ka", m_material->ka);
+    shader->setUniform3f("u_material.kd", m_material->kd);
+    shader->setUniform3f("u_material.ks", m_material->ks);
     shader->setUniform1f("u_material.ns", m_material->ns);
   }
 

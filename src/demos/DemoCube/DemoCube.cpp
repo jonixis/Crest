@@ -142,20 +142,20 @@ namespace Demo {
     m_shader->setUniformMat4f("u_mvpMatrix", mvp);
 
     // Lighting
-    m_shader->setUniform3f("u_pointLight.position", m_pointLight.position.x, m_pointLight.position.y, m_pointLight.position.z);
-    m_shader->setUniform3f("u_pointLight.ambient", m_pointLight.ambient.x, m_pointLight.ambient.y, m_pointLight.ambient.z);
-    m_shader->setUniform3f("u_pointLight.diffuse", m_pointLight.diffuse.x, m_pointLight.diffuse.y, m_pointLight.diffuse.z);
-    m_shader->setUniform3f("u_pointLight.specular", m_pointLight.specular.x, m_pointLight.specular.y, m_pointLight.specular.z);
+    m_shader->setUniform3f("u_pointLight.position", m_pointLight.position);
+    m_shader->setUniform3f("u_pointLight.ambient", m_pointLight.ambient);
+    m_shader->setUniform3f("u_pointLight.diffuse", m_pointLight.diffuse);
+    m_shader->setUniform3f("u_pointLight.specular", m_pointLight.specular);
     m_shader->setUniform1f("u_pointLight.constant", m_pointLight.constant);
     m_shader->setUniform1f("u_pointLight.linear", m_pointLight.linear);
     m_shader->setUniform1f("u_pointLight.quadratic", m_pointLight.quadratic);
 
     // Material
-    m_shader->setUniform3f("u_color", m_material.color.x, m_material.color.y, m_material.color.z);
+    m_shader->setUniform3f("u_color", m_material.color);
     m_shader->setUniform1f("u_material.shininess", m_material.shininess);
 
     // Camera
-    m_shader->setUniform3f("u_camPos", m_camera.getPosition().x, m_camera.getPosition().y, m_camera.getPosition().z);
+    m_shader->setUniform3f("u_camPos", m_camera.getPosition());
 
 
     Renderer::draw(*m_VAO, *m_IBO, *m_shader);
