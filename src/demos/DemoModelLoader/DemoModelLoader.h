@@ -14,12 +14,12 @@
 
 namespace Demo {
 
-  class DemoObjLoader : public Demo {
+  class DemoModelLoader : public Demo {
 
    public:
 
-    DemoObjLoader(const Settings& settings);
-    ~DemoObjLoader();
+    DemoModelLoader(const Settings& settings);
+    ~DemoModelLoader();
 
     void onUpdate(float deltaTime) override;
     void onRender() override;

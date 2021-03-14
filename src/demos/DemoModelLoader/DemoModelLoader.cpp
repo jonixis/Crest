@@ -1,4 +1,4 @@
-#include "DemoObjLoader.h"
+#include "DemoModelLoader.h"
 
 #include <memory>
 #include <GLFW/glfw3.h>
@@ -15,7 +15,7 @@
 #include "VertexBufferLayout.h"
 
 namespace Demo {
-  DemoObjLoader::DemoObjLoader(const Settings& settings) : Demo(settings) {
+  DemoModelLoader::DemoModelLoader(const Settings& settings) : Demo(settings) {
 
 
     GLCall(glEnable(GL_BLEND));
@@ -41,11 +41,11 @@ namespace Demo {
 
   }
 
-  DemoObjLoader::~DemoObjLoader() {
+  DemoModelLoader::~DemoModelLoader() {
 
   }
 
-  void DemoObjLoader::onUpdate(float deltaTime) {
+  void DemoModelLoader::onUpdate(float deltaTime) {
 
     // Transformations
     m_model->setPosition(m_position);
@@ -72,12 +72,12 @@ namespace Demo {
 
   }
 
-  void DemoObjLoader::onRender() {
+  void DemoModelLoader::onRender() {
     m_model->draw(m_camera.getProjectionMatrix(), m_camera.getViewMatrix(), m_modelShader);
     m_pointLight->drawModel(m_camera.getProjectionMatrix(), m_camera.getViewMatrix(), m_lightShader);
   }
 
-  void DemoObjLoader::onImGuiRender() {
+  void DemoModelLoader::onImGuiRender() {
       ImGui::Text("DemoObjLoader");
       ImGui::NewLine();
 

@@ -6,10 +6,9 @@
 
 #include "DemoMenu.h"
 #include "DemoClearColor.h"
-#include "DemoObjLoader/DemoObjLoader.h"
 #include "DemoTexture2D.h"
 #include "DemoCube.h"
-#include "DemoObjLoader.h"
+#include "DemoModelLoader.h"
 
 #include "vendor/imgui/imgui_impl_glfw.h"
 #include "vendor/imgui/imgui_impl_opengl3.h"
@@ -74,8 +73,8 @@ int main(void) {
   Demo::Settings demoCubeSettings("Cube", viewPortSize);
   demoMenu->registerDemo<Demo::DemoCube>(demoCubeSettings);
 
-  Demo::Settings demoObjLoaderSettings("Obj Loader", viewPortSize);
-  demoMenu->registerDemo<Demo::DemoObjLoader>(demoObjLoaderSettings);
+  Demo::Settings demoObjLoaderSettings("Model Loader", viewPortSize);
+  demoMenu->registerDemo<Demo::DemoModelLoader>(demoObjLoaderSettings);
 
   /* RENDER LOOP */
   while (!glfwWindowShouldClose(window)) {

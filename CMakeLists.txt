@@ -30,7 +30,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
   ${src_dir}/demos/DemoClearColor
   ${src_dir}/demos/DemoTexture2D
   ${src_dir}/demos/DemoCube
-  ${src_dir}/demos/DemoObjLoader)
+  ${src_dir}/demos/DemoModelLoader)
 
 # Dependencies
 ## GLAD
