@@ -54,6 +54,12 @@ namespace Demo {
 
     m_pointLight->setPosition(m_pointLightPosition);
 
+
+  }
+
+  void DemoModelLoader::onRender() {
+
+    /* Set uniforms */
     m_modelShader->bind();
 
     // Lighting
@@ -70,9 +76,7 @@ namespace Demo {
 
     m_modelShader->unbind();
 
-  }
-
-  void DemoModelLoader::onRender() {
+    /* Draw models */
     m_model->draw(m_camera.getProjectionMatrix(), m_camera.getViewMatrix(), m_modelShader);
     m_pointLight->drawModel(m_camera.getProjectionMatrix(), m_camera.getViewMatrix(), m_lightShader);
   }
