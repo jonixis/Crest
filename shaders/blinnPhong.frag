@@ -63,10 +63,10 @@ void main()
   vec3 specularColor = u_pointLight.specular * spec * specularMaterial;
 
   // Attenuation
-  float distance = length(u_pointLight.position - v_position);
-  float attenuation = 1.0 / (u_pointLight.constant + u_pointLight.linear * distance + u_pointLight.quadratic * distance * distance);
-  ambientColor *= attenuation;
-  diffuseColor *= attenuation;
+  // float distance = length(u_pointLight.position - v_position);
+  // float attenuation = 1.0 / (u_pointLight.constant + u_pointLight.linear * distance + u_pointLight.quadratic * distance * distance);
+  // ambientColor *= attenuation;
+  // diffuseColor *= attenuation;
 
 
   vec3 resultColor = ambientColor + diffuseColor + specularColor;
