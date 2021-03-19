@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <unordered_map>
 #include <memory>
 #include <vector>
 
@@ -13,7 +14,7 @@ class Model {
 
  public:
 
-  Model(const std::string& filepath);
+  Model(const std::string& filepath, const std::string& modelRootPath = "res/models/");
   ~Model();
 
   void draw(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix, std::shared_ptr<Shader> shader, bool useMaterial = true) const;
@@ -38,12 +39,14 @@ class Model {
 
   std::vector<std::shared_ptr<Mesh>> m_meshes;
 
+  std::unordered_map<int, std::shared_ptr<Material>> m_materialsMap;
+
   unsigned int m_numMissingNormals = 0;
   unsigned int m_numMissingTexCoords = 0;
 
   std::string m_filePath;
 
-  void loadModel(const std::string& filepath);
+  void loadModel(const std::string& filepath, const std::string& modelRootPath);
   void addMesh(const std::shared_ptr<Mesh> mesh);
   void calculateModelMatrix();
 

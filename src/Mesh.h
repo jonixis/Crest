@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 
+#include "Texture.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
@@ -13,9 +14,9 @@ struct Material {
   glm::vec3 kd = {1.0f, 1.0f, 1.0f};
   glm::vec3 ks = {1.0f, 1.0f, 1.0f};
 
-  // std::shared_ptr<Texture> diffuseTexture = nullptr;
-  // std::shared_ptr<Texture> normalTexture = nullptr;
-  // std::shared_ptr<Texture> specTexture = nullptr;
+  std::shared_ptr<Texture> diffuseTexture = nullptr;
+  std::shared_ptr<Texture> normalTexture = nullptr;
+  std::shared_ptr<Texture> specularTexture = nullptr;
   // std::shared_ptr<Texture> metalnessTexture = nullptr;
   // std::shared_ptr<Texture> roughnessTexture = nullptr;
 };

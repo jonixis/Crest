@@ -45,6 +45,30 @@ void Mesh::draw(std::shared_ptr<Shader> shader, bool useMaterial) const {
   }
 
   if (useMaterial) {
+    if (m_material->diffuseTexture) {
+      m_material->diffuseTexture->bind(0);
+      shader->setUniform1i("u_material.map_kd", 0);
+      shader->setUniform1i("u_material.hasDiffuseTex", 1);
+    } else {
+      shader->setUniform1i("u_material.hasDiffuseTex", 0);
+    }
+
+    if (m_material->specularTexture) {
+      m_material->specularTexture->bind(1);
+      shader->setUniform1i("u_material.map_ks", 1);
+      shader->setUniform1i("u_material.hasSpecularTex", 1);
+    } else {
+      shader->setUniform1i("u_material.hasSpecularTex", 0);
+    }
+
+    if (m_material->normalTexture) {
+      m_material->normalTexture->bind(2);
+      shader->setUniform1i("u_material.map_norm", 2);
+      shader->setUniform1i("u_material.hasNormalTex", 1);
+    } else {
+      shader->setUniform1i("u_material.hasNormalTex", 0);
+    }
+
     shader->setUniform3f("u_material.ka", m_material->ka);
     shader->setUniform3f("u_material.kd", m_material->kd);
     shader->setUniform3f("u_material.ks", m_material->ks);

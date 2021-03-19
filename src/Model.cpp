@@ -5,15 +5,15 @@
 #include <string>
 #include <tiny_obj_loader.h>
 #include <iostream>
-#include <unordered_map>
 #include <glm/ext/matrix_transform.hpp>
 
 #include "Mesh.h"
 #include "Shader.h"
+#include "Texture.h"
 #include "glm/trigonometric.hpp"
 
-Model::Model(const std::string& filepath) : m_filePath(filepath) {
-  loadModel(filepath);
+Model::Model(const std::string& filepath, const std::string& modelRootPath) : m_filePath(filepath) {
+  loadModel(filepath, modelRootPath);
   calculateModelMatrix();
 }
 
@@ -55,7 +55,7 @@ void Model::setScale(const glm::vec3& scale) {
   calculateModelMatrix();
 }
 
-void Model::loadModel(const std::string &filepath) {
+void Model::loadModel(const std::string& filepath, const std::string& modelRootPath) {
   tinyobj::ObjReaderConfig readerConfig;
   readerConfig.mtl_search_path = "";
 
@@ -143,27 +143,50 @@ void Model::loadModel(const std::string &filepath) {
         materialId = -1; // Not all faces in mesh have same material -> reset
     }
 
+    // Create material
     if (materialId != -1) {
-      std::shared_ptr<Material> material = std::make_shared<Material>();
-      material->ka = glm::vec3(
-                               materials[materialId].ambient[0],
-                               materials[materialId].ambient[1],
-                               materials[materialId].ambient[2]);
-      material->kd = glm::vec3(
-                               materials[materialId].diffuse[0],
-                               materials[materialId].diffuse[1],
-                               materials[materialId].diffuse[2]);
-      material->ks = glm::vec3(
-                               materials[materialId].specular[0],
-                               materials[materialId].specular[1],
-                               materials[materialId].specular[2]);
 
-      material->ns = materials[materialId].shininess;
+      // Check if material already exists
+      auto it = m_materialsMap.find(materialId);
+      if (it != m_materialsMap.end()) {
+        std::shared_ptr<Material> material = it->second;
+        mesh->setMaterial(material);
+      } else {
+        // Create new material
+        std::shared_ptr<Material> material = std::make_shared<Material>();
+        material->ka = glm::vec3(
+                                 materials[materialId].ambient[0],
+                                 materials[materialId].ambient[1],
+                                 materials[materialId].ambient[2]);
+        material->kd = glm::vec3(
+                                 materials[materialId].diffuse[0],
+                                 materials[materialId].diffuse[1],
+                                 materials[materialId].diffuse[2]);
+        material->ks = glm::vec3(
+                                 materials[materialId].specular[0],
+                                 materials[materialId].specular[1],
+                                 materials[materialId].specular[2]);
 
-      mesh->setMaterial(material);
-      std::cout << "Added material to mesh: " << materials[materialId].name << std::endl;
+        material->ns = materials[materialId].shininess;
+
+        bool hasDiffuseTexture = !materials[materialId].diffuse_texname.empty();
+        bool hasSpecularTexture = !materials[materialId].specular_texname.empty();
+        bool hasNormalTexture = !materials[materialId].normal_texname.empty();
+
+        if (hasDiffuseTexture) {
+          material->diffuseTexture = std::make_shared<Texture>(modelRootPath + materials[materialId].diffuse_texname);
+        }
+
+        if (hasSpecularTexture)
+          material->specularTexture = std::make_shared<Texture>(modelRootPath + materials[materialId].specular_texname);
+        if (hasNormalTexture)
+          material->normalTexture = std::make_shared<Texture>(modelRootPath + materials[materialId].normal_texname);
+
+        mesh->setMaterial(material);
+        m_materialsMap.insert({ materialId, material });
+        std::cout << "Added new material: " << materials[materialId].name << std::endl;
+      }
     }
-
     addMesh(mesh);
   }
 

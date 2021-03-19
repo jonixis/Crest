@@ -17,5 +17,5 @@ Camera::Camera(glm::uvec2 viewPortSize, glm::vec3 position, glm::vec3 target, gl
   m_viewMatrix = glm::lookAt(m_position, m_forward, m_up);
 
   float aspect = float(viewPortSize.x) / float(viewPortSize.y);
-  m_projecionMatrix = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 50.0f);
+  m_projecionMatrix = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
 }
