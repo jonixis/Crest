@@ -27,17 +27,22 @@ namespace Demo {
     // m_model = std::make_unique<Model>("res/models/newell_teaset/spoon.obj");
     // m_model = std::make_unique<Model>("res/models/newell_teaset/teacup.obj");
     // m_model = std::make_unique<Model>("res/models/newell_teaset/teapot.obj");
-    m_model = std::make_unique<Model>("res/models/mandalorian/mando-helmet.obj");
+    // m_model = std::make_unique<Model>("res/models/mandalorian/mando-helmet.obj");
     // m_model = std::make_unique<Model>("res/models/sphere/sphere.obj");
 
+    m_model = std::make_unique<Model>("res/models/sponza/sponza.obj", "res/models/sponza/");
+    m_scale = 0.03f;
+    m_rotation = {0.0f, 90.0f, 0.0f};
+
+
     m_pointLight = std::make_unique<PointLight>();
-    m_pointLightPosition = {0.0f, -1.0f, 15.0f};
+    m_pointLightPosition = {0.0f, 9.0f, 7.0f};
     m_pointLight->setPosition(m_pointLightPosition);
 
     m_modelShader = std::make_shared<Shader>("shaders/blinnPhong");
     m_lightShader = std::make_shared<Shader>("shaders/light");
 
-    m_camera = FlightCamera(m_settings.viewPortSize, {0.0f, 0.0f, 40.0f}, {0.0f, 0.0f, 0.0f});
+    m_camera = FlightCamera(m_settings.viewPortSize, {3.0f, 20.0f, 35.0f}, {0.0f, 0.0f, 0.0f});
 
   }
 
