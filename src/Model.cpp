@@ -90,7 +90,7 @@ void Model::loadModel(const std::string& filepath, const std::string& modelRootP
     // Loop over faces
     size_t indexOffset = 0; // Depends on num of vertices per face
     for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); ++f) {
-      int fv = shapes[s].mesh.num_face_vertices[f];
+      unsigned int fv = shapes[s].mesh.num_face_vertices[f];
 
       // Loop over vertices in face
       for (size_t v = 0; v < fv; ++v) {
