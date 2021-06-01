@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
 set(src_dir ${PROJECT_SOURCE_DIR}/src)
 set(libs_dir ${PROJECT_SOURCE_DIR}/libs)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/Debug)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/Release)
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/Debug)
+#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/Release)
 
 file(GLOB src_files
   ${src_dir}/*.cpp
@@ -56,3 +56,17 @@ target_link_libraries(${PROJECT_NAME} PRIVATE stb_image)
 ## TINY_OBJ_LOADER
 add_subdirectory(${libs_dir}/tinyobjloader)
 target_link_libraries(${PROJECT_NAME} PRIVATE tinyobjloader)
+
+# Copy resources to build folder
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${PROJECT_SOURCE_DIR}/res/
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
+
+# Copy shaders to build folder
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${PROJECT_SOURCE_DIR}/shaders/
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/shaders)
