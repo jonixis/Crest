@@ -1,18 +1,11 @@
 #include "DemoModelLoader.h"
 
 #include <memory>
-#include <GLFW/glfw3.h>
-#include <glm/ext/matrix_transform.hpp>
 #include <glm/fwd.hpp>
-#include <glm/trigonometric.hpp>
 #include <imgui.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
-#include "IndexBuffer.h"
 #include "Renderer.h"
-#include "Texture.h"
-#include "VertexBufferLayout.h"
 
 namespace Demo {
   DemoModelLoader::DemoModelLoader(const Settings& settings) : Demo(settings) {
@@ -42,7 +35,9 @@ namespace Demo {
     m_modelShader = std::make_shared<Shader>("shaders/blinnPhong");
     m_lightShader = std::make_shared<Shader>("shaders/light");
 
-    m_camera = FlightCamera(m_settings.viewPortSize, {3.0f, 20.0f, 35.0f}, {0.0f, 0.0f, 0.0f});
+    glm::vec3 camPos = {3.0f, 20.0f, 35.0f};
+    glm::vec3 camTarget = {0.0f, 0.0f, 0.0f};
+    m_camera = std::make_unique<FlightCamera>(m_settings.viewPortSize, camPos, camTarget);
 
   }
 
@@ -51,6 +46,7 @@ namespace Demo {
   }
 
   void DemoModelLoader::onUpdate(float deltaTime) {
+
 
     // Transformations
     m_model->setPosition(m_position);
@@ -77,13 +73,13 @@ namespace Demo {
     m_modelShader->setUniform1f("u_pointLight.quadratic", m_pointLight->getAttQuadratic());
 
     // Camera
-    m_modelShader->setUniform3f("u_camPos", m_camera.getPosition());
+    m_modelShader->setUniform3f("u_camPos", m_camera->getPosition());
 
     m_modelShader->unbind();
 
     /* Draw models */
-    m_model->draw(m_camera.getProjectionMatrix(), m_camera.getViewMatrix(), m_modelShader);
-    m_pointLight->drawModel(m_camera.getProjectionMatrix(), m_camera.getViewMatrix(), m_lightShader);
+    m_model->draw(m_camera->getProjectionMatrix(), m_camera->getViewMatrix(), m_modelShader);
+    m_pointLight->drawModel(m_camera->getProjectionMatrix(), m_camera->getViewMatrix(), m_lightShader);
   }
 
   void DemoModelLoader::onImGuiRender() {

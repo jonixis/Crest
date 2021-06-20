@@ -27,7 +27,7 @@ namespace Demo {
 
    private:
 
-    FlightCamera m_camera;
+    std::unique_ptr<FlightCamera> m_camera;
 
     std::shared_ptr<Shader> m_modelShader;
     std::shared_ptr<Shader> m_lightShader;
