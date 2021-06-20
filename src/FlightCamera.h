@@ -4,12 +4,12 @@
 
 class FlightCamera : public Camera {
 
- public:
+public:
 
-  using Camera::Camera;
+    using Camera::Camera;
 
-  void update() override;
+    void update() override;
 
- private:
+private:
 
 };

@@ -4,21 +4,24 @@
 
 namespace Demo {
 
-  class DemoClearColor : public Demo {
+    class DemoClearColor : public Demo {
 
-   public:
+    public:
 
-    DemoClearColor(const Settings& settings);
-    ~DemoClearColor();
+        DemoClearColor(const Settings &settings);
 
-    void onUpdate(float deltaTime) override;
-    void onRender() override;
-    void onImGuiRender() override;
+        ~DemoClearColor();
 
-   private:
+        void onUpdate(float deltaTime) override;
 
-    float m_clearColor[4];
+        void onRender() override;
 
-  };
+        void onImGuiRender() override;
+
+    private:
+
+        float m_clearColor[4];
+
+    };
 
 }

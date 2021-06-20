@@ -9,43 +9,49 @@
 #include "VertexBufferLayout.h"
 
 struct Material {
-  float ns = 1.0f;
-  glm::vec3 ka = {1.0f, 1.0f, 1.0f};
-  glm::vec3 kd = {1.0f, 1.0f, 1.0f};
-  glm::vec3 ks = {1.0f, 1.0f, 1.0f};
+    float ns = 1.0f;
+    glm::vec3 ka = {1.0f, 1.0f, 1.0f};
+    glm::vec3 kd = {1.0f, 1.0f, 1.0f};
+    glm::vec3 ks = {1.0f, 1.0f, 1.0f};
 
-  std::shared_ptr<Texture> diffuseTexture = nullptr;
-  std::shared_ptr<Texture> normalTexture = nullptr;
-  std::shared_ptr<Texture> specularTexture = nullptr;
-  // std::shared_ptr<Texture> metalnessTexture = nullptr;
-  // std::shared_ptr<Texture> roughnessTexture = nullptr;
+    std::shared_ptr<Texture> diffuseTexture = nullptr;
+    std::shared_ptr<Texture> normalTexture = nullptr;
+    std::shared_ptr<Texture> specularTexture = nullptr;
+    // std::shared_ptr<Texture> metalnessTexture = nullptr;
+    // std::shared_ptr<Texture> roughnessTexture = nullptr;
 };
 
 class Mesh {
 
- public:
+public:
 
-  Mesh() = default;
-  Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
-  ~Mesh();
+    Mesh() = default;
 
-  void init();
-  void addVertex(const Vertex& vertex);
-  void addIndex(const unsigned int index);
-  void setMaterial(const std::shared_ptr<Material> material);
-  void draw(std::shared_ptr<Shader> shader, bool useMaterial) const;
+    Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices);
 
-  unsigned int getNumOfVertices() const;
+    ~Mesh();
 
- private:
+    void init();
 
-  std::unique_ptr<VertexArray> m_VAO;
-  std::unique_ptr<VertexBuffer> m_VBO;
-  std::unique_ptr<IndexBuffer> m_IBO;
+    void addVertex(const Vertex &vertex);
 
-  std::shared_ptr<Material> m_material;
+    void addIndex(const unsigned int index);
 
-  std::vector<Vertex> m_vertices;
-  std::vector<unsigned int> m_indices;
+    void setMaterial(const std::shared_ptr<Material> material);
+
+    void draw(std::shared_ptr<Shader> shader, bool useMaterial) const;
+
+    unsigned int getNumOfVertices() const;
+
+private:
+
+    std::unique_ptr<VertexArray> m_VAO;
+    std::unique_ptr<VertexBuffer> m_VBO;
+    std::unique_ptr<IndexBuffer> m_IBO;
+
+    std::shared_ptr<Material> m_material;
+
+    std::vector<Vertex> m_vertices;
+    std::vector<unsigned int> m_indices;
 
 };

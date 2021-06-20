@@ -9,24 +9,24 @@
 
 namespace Demo {
 
-  class DemoMenu : public Demo {
+    class DemoMenu : public Demo {
 
-   public:
+    public:
 
-    DemoMenu(Demo*& currentDemo);
+        DemoMenu(Demo *&currentDemo);
 
-    void onImGuiRender() override;
+        void onImGuiRender() override;
 
-    template<typename T>
-      void registerDemo(const Settings& settings) {
-      std::cout << "Registering demo: " << settings.name << std::endl;
-      m_demos.push_back(std::make_pair(settings.name, [settings]() { return new T(settings); }));
-    }
+        template<typename T>
+        void registerDemo(const Settings &settings) {
+            std::cout << "Registering demo: " << settings.name << std::endl;
+            m_demos.push_back(std::make_pair(settings.name, [settings]() { return new T(settings); }));
+        }
 
-   private:
+    private:
 
-    Demo*& m_currentDemo;
-    std::vector<std::pair<std::string, std::function<Demo*()>>> m_demos;
+        Demo *&m_currentDemo;
+        std::vector<std::pair<std::string, std::function<Demo *()>>> m_demos;
 
-  };
+    };
 }

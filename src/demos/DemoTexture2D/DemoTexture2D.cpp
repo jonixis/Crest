@@ -11,67 +11,72 @@
 #include "VertexBufferLayout.h"
 
 namespace Demo {
-  DemoTexture2D::DemoTexture2D(const Settings& settings) : Demo(settings), m_proj(glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f)), m_view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))), m_translation(0.0f, 0.0f, 0.0f) {
+    DemoTexture2D::DemoTexture2D(const Settings &settings) : Demo(settings),
+                                                             m_proj(glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f)),
+                                                             m_view(glm::translate(glm::mat4(1.0f),
+                                                                                   glm::vec3(0, 0, 0))),
+                                                             m_translation(0.0f, 0.0f, 0.0f) {
 
-    float positions[] = {
-      -0.5f, -0.5f, 0.0f, 0.0f, // index 0
-      0.5f, -0.5f, 1.0f, 0.0f, // index 1
-      0.5f, 0.5f, 1.0f, 1.0f, // index 2
-      -0.5f, 0.5f, 0.0f, 1.0f // index 3
-    };
+        float positions[] = {
+                -0.5f, -0.5f, 0.0f, 0.0f, // index 0
+                0.5f, -0.5f, 1.0f, 0.0f, // index 1
+                0.5f, 0.5f, 1.0f, 1.0f, // index 2
+                -0.5f, 0.5f, 0.0f, 1.0f // index 3
+        };
 
-    unsigned int indices[] = {
-      0, 1, 2,
-      2, 3, 0
-    };
+        unsigned int indices[] = {
+                0, 1, 2,
+                2, 3, 0
+        };
 
-    GLCall(glEnable(GL_BLEND));
-    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    m_VAO = std::make_unique<VertexArray>();
-    m_VBO = std::make_unique<VertexBuffer>(positions, 4 * 4 * sizeof(float));
+        m_VAO = std::make_unique<VertexArray>();
+        m_VBO = std::make_unique<VertexBuffer>(positions, 4 * 4 * sizeof(float));
 
-    VertexBufferLayout layout;
-    layout.push<float>(2); // Add vertex positions
-    layout.push<float>(2); // Add vertex texture coords
-    m_VAO->addCustomBuffer(*m_VBO, layout);
-    m_IBO = std::make_unique<IndexBuffer>(indices, 6);
+        VertexBufferLayout layout;
+        layout.push<float>(2); // Add vertex positions
+        layout.push<float>(2); // Add vertex texture coords
+        m_VAO->addCustomBuffer(*m_VBO, layout);
+        m_IBO = std::make_unique<IndexBuffer>(indices, 6);
 
-    m_shader = std::make_unique<Shader>("shaders/texture");
-    m_shader->bind();
-    m_shader->setUniform4f("u_color", {0.8f, 0.2f, 0.8f, 1.0f});
+        m_shader = std::make_unique<Shader>("shaders/texture");
+        m_shader->bind();
+        m_shader->setUniform4f("u_color", {0.8f, 0.2f, 0.8f, 1.0f});
 
-    m_texture = std::make_unique<Texture>("res/textures/logo.png");
-    m_shader->setUniform1i("u_texture", 0);
-  }
+        m_texture = std::make_unique<Texture>("res/textures/logo.png");
+        m_shader->setUniform1i("u_texture", 0);
+    }
 
-  DemoTexture2D::~DemoTexture2D() {
+    DemoTexture2D::~DemoTexture2D() {
 
-  }
+    }
 
-  void DemoTexture2D::onUpdate(float deltaTime) {
+    void DemoTexture2D::onUpdate(float deltaTime) {
 
-  }
+    }
 
-  void DemoTexture2D::onRender() {
-    GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-    GLCall(glClear(GL_COLOR_BUFFER_BIT));
+    void DemoTexture2D::onRender() {
+        GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+        GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-    m_texture->bind();
+        m_texture->bind();
 
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), m_translation);
-    glm::mat4 mvp = m_proj * m_view * model;
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), m_translation);
+        glm::mat4 mvp = m_proj * m_view * model;
 
-    // Usually one would use materials for this and pass material to renderer
-    m_shader->bind();
-    m_shader->setUniformMat4f("u_MVP", mvp);
+        // Usually one would use materials for this and pass material to renderer
+        m_shader->bind();
+        m_shader->setUniformMat4f("u_MVP", mvp);
 
-    Renderer::draw(*m_VAO, *m_IBO, *m_shader);
-  }
+        Renderer::draw(*m_VAO, *m_IBO, *m_shader);
+    }
 
-  void DemoTexture2D::onImGuiRender() {
-      ImGui::Text("Texture2D");
-      ImGui::SliderFloat3("Translation", &m_translation.x, -2.0f, 2.0f);
-      ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-  }
+    void DemoTexture2D::onImGuiRender() {
+        ImGui::Text("Texture2D");
+        ImGui::SliderFloat3("Translation", &m_translation.x, -2.0f, 2.0f);
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate,
+                    ImGui::GetIO().Framerate);
+    }
 }

@@ -5,31 +5,37 @@
 
 namespace Demo {
 
-  struct Settings {
-    Settings() = default;
-    Settings(const std::string& name, const glm::uvec2& viewPortSize) : name(name), viewPortSize(viewPortSize) {}
+    struct Settings {
+        Settings() = default;
 
-    std::string name;
-    glm::uvec2 viewPortSize;
+        Settings(const std::string &name, const glm::uvec2 &viewPortSize) : name(name), viewPortSize(viewPortSize) {}
 
-  };
+        std::string name;
+        glm::uvec2 viewPortSize;
 
-  class Demo {
+    };
 
-   public:
+    class Demo {
 
-    Demo() = default;
-    Demo(Settings settings) : m_settings(settings) {};
-    virtual ~Demo() {};
+    public:
 
-    virtual void init() {};
-    virtual void onUpdate(float deltaTime) {};
-    virtual void onRender() {};
-    virtual void onImGuiRender() {};
+        Demo() = default;
 
-   protected:
+        Demo(Settings settings) : m_settings(settings) {};
 
-    Settings m_settings;
+        virtual ~Demo() {};
 
-  };
+        virtual void init() {};
+
+        virtual void onUpdate(float deltaTime) {};
+
+        virtual void onRender() {};
+
+        virtual void onImGuiRender() {};
+
+    protected:
+
+        Settings m_settings;
+
+    };
 }

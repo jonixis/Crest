@@ -14,54 +14,57 @@
 
 struct DemoPointLight {
 
-  glm::vec3 position;
+    glm::vec3 position;
 
-  glm::vec3 ambient;
-  glm::vec3 diffuse;
-  glm::vec3 specular;
+    glm::vec3 ambient;
+    glm::vec3 diffuse;
+    glm::vec3 specular;
 
-  float constant;
-  float linear;
-  float quadratic;
+    float constant;
+    float linear;
+    float quadratic;
 
 };
 
 struct DemoMaterial {
 
-  glm::vec3 color;
-  float shininess;
+    glm::vec3 color;
+    float shininess;
 
 };
 
 namespace Demo {
 
-  class DemoCube : public Demo {
+    class DemoCube : public Demo {
 
-   public:
+    public:
 
-    DemoCube(const Settings& settings);
-    ~DemoCube();
+        DemoCube(const Settings &settings);
 
-    void onUpdate(float deltaTime) override;
-    void onRender() override;
-    void onImGuiRender() override;
+        ~DemoCube();
 
-   private:
+        void onUpdate(float deltaTime) override;
 
-    FlightCamera m_camera;
+        void onRender() override;
 
-    std::unique_ptr<VertexArray> m_VAO;
-    std::unique_ptr<VertexBuffer> m_VBO;
-    std::unique_ptr<IndexBuffer> m_IBO;
-    std::unique_ptr<Shader> m_shader;
+        void onImGuiRender() override;
 
-    DemoPointLight m_pointLight;
-    DemoMaterial m_material;
+    private:
 
-    float m_rotationX = 0.0f;
-    float m_rotationY = 0.0f;
-    float m_rotationZ = 0.0f;
+        FlightCamera m_camera;
 
-  };
+        std::unique_ptr<VertexArray> m_VAO;
+        std::unique_ptr<VertexBuffer> m_VBO;
+        std::unique_ptr<IndexBuffer> m_IBO;
+        std::unique_ptr<Shader> m_shader;
+
+        DemoPointLight m_pointLight;
+        DemoMaterial m_material;
+
+        float m_rotationX = 0.0f;
+        float m_rotationY = 0.0f;
+        float m_rotationZ = 0.0f;
+
+    };
 
 }

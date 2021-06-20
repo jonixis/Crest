@@ -14,33 +14,36 @@
 
 namespace Demo {
 
-  class DemoModelLoader : public Demo {
+    class DemoModelLoader : public Demo {
 
-   public:
+    public:
 
-    DemoModelLoader(const Settings& settings);
-    ~DemoModelLoader();
+        DemoModelLoader(const Settings &settings);
 
-    void onUpdate(float deltaTime) override;
-    void onRender() override;
-    void onImGuiRender() override;
+        ~DemoModelLoader();
 
-   private:
+        void onUpdate(float deltaTime) override;
 
-    std::unique_ptr<FlightCamera> m_camera;
+        void onRender() override;
 
-    std::shared_ptr<Shader> m_modelShader;
-    std::shared_ptr<Shader> m_lightShader;
-    std::unique_ptr<Model> m_model;
+        void onImGuiRender() override;
 
-    std::unique_ptr<PointLight> m_pointLight;
+    private:
 
-    glm::vec3 m_position = {0.0f, 0.0f, 0.0f};
-    glm::vec3 m_rotation = {0.0f, 0.0f, 0.0f};
-    float m_scale = 1.0f;
+        std::unique_ptr<FlightCamera> m_camera;
 
-    glm::vec3 m_pointLightPosition = {0.0f, 0.0f, 0.0f};
+        std::shared_ptr<Shader> m_modelShader;
+        std::shared_ptr<Shader> m_lightShader;
+        std::unique_ptr<Model> m_model;
 
-  };
+        std::unique_ptr<PointLight> m_pointLight;
+
+        glm::vec3 m_position = {0.0f, 0.0f, 0.0f};
+        glm::vec3 m_rotation = {0.0f, 0.0f, 0.0f};
+        float m_scale = 1.0f;
+
+        glm::vec3 m_pointLightPosition = {0.0f, 0.0f, 0.0f};
+
+    };
 
 }

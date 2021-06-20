@@ -8,47 +8,54 @@
 #include "Mesh.h"
 #include "Shader.h"
 
-static const glm::mat4 identityMatrix{ 1.0f };
+static const glm::mat4 identityMatrix{1.0f};
 
 class Model {
 
- public:
+public:
 
-  Model(const std::string& filepath, const std::string& modelRootPath = "res/models/");
-  ~Model();
+    Model(const std::string &filepath, const std::string &modelRootPath = "res/models/");
 
-  void draw(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix, std::shared_ptr<Shader> shader, bool useMaterial = true) const;
+    ~Model();
 
-  void setPosition(const glm::vec3& position);
-  void setRotation(const glm::vec3& rotation);
-  void setScale(const glm::vec3& scale);
+    void draw(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix, std::shared_ptr<Shader> shader,
+              bool useMaterial = true) const;
 
-  const glm::mat4& getModelMatrix() const { return m_modelMatrix; }
-  const glm::mat3& getNormalMatrix() const { return m_normalMatrix; }
+    void setPosition(const glm::vec3 &position);
 
- private:
+    void setRotation(const glm::vec3 &rotation);
 
-  glm::mat3 m_normalMatrix;
+    void setScale(const glm::vec3 &scale);
 
-  glm::mat4 m_modelMatrix;
-  glm::mat4 m_translationMatrix = glm::mat4(1.0f);
-  glm::mat4 m_rotationMatrix = glm::mat4(1.0f);
-  glm::mat4 m_scalingMatrix = glm::mat4(1.0f);
+    const glm::mat4 &getModelMatrix() const { return m_modelMatrix; }
 
-  glm::vec3 m_position;
+    const glm::mat3 &getNormalMatrix() const { return m_normalMatrix; }
 
-  std::vector<std::shared_ptr<Mesh>> m_meshes;
+private:
 
-  std::unordered_map<int, std::shared_ptr<Material>> m_materialsMap;
+    glm::mat3 m_normalMatrix;
 
-  unsigned int m_numMissingNormals = 0;
-  unsigned int m_numMissingTexCoords = 0;
+    glm::mat4 m_modelMatrix;
+    glm::mat4 m_translationMatrix = glm::mat4(1.0f);
+    glm::mat4 m_rotationMatrix = glm::mat4(1.0f);
+    glm::mat4 m_scalingMatrix = glm::mat4(1.0f);
 
-  std::string m_filePath;
+    glm::vec3 m_position;
 
-  void loadModel(const std::string& filepath, const std::string& modelRootPath);
-  void addMesh(const std::shared_ptr<Mesh> mesh);
-  void calculateModelMatrix();
+    std::vector<std::shared_ptr<Mesh>> m_meshes;
+
+    std::unordered_map<int, std::shared_ptr<Material>> m_materialsMap;
+
+    unsigned int m_numMissingNormals = 0;
+    unsigned int m_numMissingTexCoords = 0;
+
+    std::string m_filePath;
+
+    void loadModel(const std::string &filepath, const std::string &modelRootPath);
+
+    void addMesh(const std::shared_ptr<Mesh> mesh);
+
+    void calculateModelMatrix();
 
 
 };

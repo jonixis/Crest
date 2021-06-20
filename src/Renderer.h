@@ -13,12 +13,14 @@
   ASSERT(GLLogCall(#x, __FILE__, __LINE__))
 
 void GLClearError();
-bool GLLogCall(const char* function, const char* file, int line);
+
+bool GLLogCall(const char *function, const char *file, int line);
 
 class Renderer {
 
- public:
-  static void clear();
-  static void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader);
+public:
+    static void clear();
+
+    static void draw(const VertexArray &va, const IndexBuffer &ib, const Shader &shader);
 
 };

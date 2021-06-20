@@ -13,28 +13,31 @@
 
 namespace Demo {
 
-  class DemoTexture2D : public Demo {
+    class DemoTexture2D : public Demo {
 
-   public:
+    public:
 
-    DemoTexture2D(const Settings& settings);
-    ~DemoTexture2D();
+        DemoTexture2D(const Settings &settings);
 
-    void onUpdate(float deltaTime) override;
-    void onRender() override;
-    void onImGuiRender() override;
+        ~DemoTexture2D();
 
-   private:
+        void onUpdate(float deltaTime) override;
 
-    std::unique_ptr<VertexArray> m_VAO;
-    std::unique_ptr<VertexBuffer> m_VBO;
-    std::unique_ptr<IndexBuffer> m_IBO;
-    std::unique_ptr<Shader> m_shader;
-    std::unique_ptr<Texture> m_texture;
+        void onRender() override;
 
-    glm::mat4 m_proj, m_view;
-    glm::vec3 m_translation;
+        void onImGuiRender() override;
 
-  };
+    private:
+
+        std::unique_ptr<VertexArray> m_VAO;
+        std::unique_ptr<VertexBuffer> m_VBO;
+        std::unique_ptr<IndexBuffer> m_IBO;
+        std::unique_ptr<Shader> m_shader;
+        std::unique_ptr<Texture> m_texture;
+
+        glm::mat4 m_proj, m_view;
+        glm::vec3 m_translation;
+
+    };
 
 }
