@@ -8,7 +8,7 @@
 #include "Renderer.h"
 
 namespace Demo {
-    DemoModelLoader::DemoModelLoader(const Settings &settings) : Demo(settings) {
+    DemoModelLoader::DemoModelLoader(const Settings &settings, const std::shared_ptr<InputManager>& inputManager) : Demo(settings) {
 
 
         GLCall(glEnable(GL_BLEND));
@@ -38,6 +38,7 @@ namespace Demo {
         glm::vec3 camPos = {3.0f, 20.0f, 35.0f};
         glm::vec3 camTarget = {0.0f, 0.0f, 0.0f};
         m_camera = std::make_unique<FlightCamera>(m_settings.viewPortSize, camPos, camTarget);
+        m_camera->setInputManager(inputManager);
 
     }
 
@@ -47,6 +48,7 @@ namespace Demo {
 
     void DemoModelLoader::onUpdate(float deltaTime) {
 
+        m_camera->update();
 
         // Transformations
         m_model->setPosition(m_position);

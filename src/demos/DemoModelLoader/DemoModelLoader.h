@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Demo.h"
 #include "IndexBuffer.h"
+#include "InputManager.h"
 #include "Model.h"
 #include "PointLight.h"
 #include "Shader.h"
@@ -18,7 +19,7 @@ namespace Demo {
 
     public:
 
-        DemoModelLoader(const Settings &settings);
+        DemoModelLoader(const Settings &settings, const std::shared_ptr<InputManager>& inputManager);
 
         ~DemoModelLoader();
 

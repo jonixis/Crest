@@ -14,12 +14,13 @@
 #include "vendor/imgui/imgui_impl_opengl3.h"
 
 #include "Renderer.h"
+#include "InputManager.h"
 
 const unsigned int WINDOW_WIDTH = 1920;
 const unsigned int WINDOW_HEIGHT = 1080;
 
 int main(void) {
-    GLFWwindow *window;
+    GLFWwindow* window;
 
     if (!glfwInit())
         return -1;
@@ -64,6 +65,8 @@ int main(void) {
     glm::ivec2 viewPortSize;
     glfwGetFramebufferSize(window, &viewPortSize.x, &viewPortSize.y);
 
+    const std::shared_ptr<InputManager> inputManager = std::make_shared<InputManager>(window);
+
     Demo::Settings demoClearColorSettings("Clear Color", viewPortSize);
     demoMenu->registerDemo<Demo::DemoClearColor>(demoClearColorSettings);
 
@@ -74,7 +77,7 @@ int main(void) {
     demoMenu->registerDemo<Demo::DemoCube>(demoCubeSettings);
 
     Demo::Settings demoObjLoaderSettings("Model Loader", viewPortSize);
-    demoMenu->registerDemo<Demo::DemoModelLoader>(demoObjLoaderSettings);
+    demoMenu->registerDemo<Demo::DemoModelLoader>(demoObjLoaderSettings, inputManager);
 
     /* RENDER LOOP */
     while (!glfwWindowShouldClose(window)) {

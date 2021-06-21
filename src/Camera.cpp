@@ -6,8 +6,11 @@
 
 #include "Renderer.h"
 
-Camera::Camera(glm::uvec2 viewPortSize, glm::vec3 position, glm::vec3 target, glm::vec3 up)
-        : m_viewPortSize(viewPortSize), m_position(position), m_target(target) {
+Camera::Camera(glm::uvec2 viewPortSize,
+               glm::vec3 position,
+               glm::vec3 target,
+               glm::vec3 up)
+        : m_viewPortSize(viewPortSize),  m_position(position), m_target(target) {
     GLCall(glViewport(0, 0, m_viewPortSize.x, m_viewPortSize.y));
 
     m_forward = glm::normalize(m_target - m_position);
@@ -18,4 +21,8 @@ Camera::Camera(glm::uvec2 viewPortSize, glm::vec3 position, glm::vec3 target, gl
 
     float aspect = float(viewPortSize.x) / float(viewPortSize.y);
     m_projecionMatrix = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
+}
+
+void Camera::updateViewMatrix() {
+    m_viewMatrix = glm::lookAt(m_position, m_forward, m_up);
 }
