@@ -18,7 +18,7 @@ public:
 
     ~Model();
 
-    void draw(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix, std::shared_ptr<Shader> shader,
+    void draw(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix, const std::shared_ptr<Shader>& shader,
               bool useMaterial = true) const;
 
     void setPosition(const glm::vec3 &position);

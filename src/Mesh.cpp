@@ -39,7 +39,7 @@ void Mesh::setMaterial(const std::shared_ptr<Material> material) {
     m_material = material;
 }
 
-void Mesh::draw(std::shared_ptr<Shader> shader, bool useMaterial) const {
+void Mesh::draw(const std::shared_ptr<Shader>& shader, bool useMaterial) const {
     if (!m_VAO || !m_IBO) {
         std::cout << "Initialize model before drawing!" << std::endl;
         exit(1);

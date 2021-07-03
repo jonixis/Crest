@@ -39,7 +39,7 @@ public:
 
     void setMaterial(const std::shared_ptr<Material> material);
 
-    void draw(std::shared_ptr<Shader> shader, bool useMaterial) const;
+    void draw(const std::shared_ptr<Shader>& shader, bool useMaterial) const;
 
     unsigned int getNumOfVertices() const;
 

@@ -21,7 +21,7 @@ Model::~Model() {
 
 }
 
-void Model::draw(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix, std::shared_ptr<Shader> shader,
+void Model::draw(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix, const std::shared_ptr<Shader>& shader,
                  bool useMaterial) const {
     //TODO only update matrices if changed
     glm::mat4 mvpMatrix = projectionMatrix * viewMatrix * m_modelMatrix;
