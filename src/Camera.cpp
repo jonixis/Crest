@@ -17,12 +17,12 @@ Camera::Camera(glm::uvec2 viewPortSize,
     m_right = glm::normalize(glm::cross(up, m_forward));
     m_up = glm::cross(m_forward, m_right);
 
-    m_viewMatrix = glm::lookAt(m_position, m_forward, m_up);
+    updateViewMatrix();
 
     float aspect = float(viewPortSize.x) / float(viewPortSize.y);
     m_projecionMatrix = glm::perspective(glm::radians(45.0f), aspect, 0.1f, 100.0f);
 }
 
 void Camera::updateViewMatrix() {
-    m_viewMatrix = glm::lookAt(m_position, m_forward, m_up);
+    m_viewMatrix = glm::lookAt(m_position, m_position + m_forward, m_up);
 }

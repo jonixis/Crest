@@ -1,14 +1,18 @@
 #pragma once
 
 #include "Camera.h"
-
 #include "InputManager.h"
 
 class FlightCamera : public Camera {
 
 public:
 
-    using Camera::Camera;
+    FlightCamera() = default;
+
+    FlightCamera(glm::uvec2 viewPortSize,
+                 glm::vec3 position,
+                 glm::vec3 target,
+                 glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f));
 
     void update() override;
 
@@ -19,5 +23,8 @@ private:
 
     float m_deltaFrameTime = 0.0f;
     float m_lastFrameTime = 0.0f;
+
+    float m_pitch = 0.0f;
+    float m_yaw = 0.0f;
 
 };
