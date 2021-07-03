@@ -17,4 +17,7 @@ public:
 private:
     std::shared_ptr<InputManager> m_inputManager;
 
+    float m_deltaFrameTime = 0.0f;
+    float m_lastFrameTime = 0.0f;
+
 };
