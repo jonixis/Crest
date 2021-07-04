@@ -17,7 +17,7 @@ public:
 
     virtual ~Camera() {};
 
-    virtual void update() = 0;
+    virtual void update(float deltaTime) = 0;
 
     void updateViewMatrix();
 

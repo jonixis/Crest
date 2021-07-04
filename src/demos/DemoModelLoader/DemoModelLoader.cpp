@@ -10,7 +10,6 @@
 namespace Demo {
     DemoModelLoader::DemoModelLoader(const Settings &settings, const std::shared_ptr<InputManager>& inputManager) : Demo(settings) {
 
-
         GLCall(glEnable(GL_BLEND));
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
@@ -20,10 +19,10 @@ namespace Demo {
         // m_model = std::make_unique<Model>("res/models/newell_teaset/spoon.obj");
         // m_model = std::make_unique<Model>("res/models/newell_teaset/teacup.obj");
         // m_model = std::make_unique<Model>("res/models/newell_teaset/teapot.obj");
-        // m_model = std::make_unique<Model>("res/models/mandalorian/mando-helmet.obj");
+         m_mandoModel = std::make_unique<Model>("res/models/mandalorian/mando-helmet.obj");
         // m_model = std::make_unique<Model>("res/models/sphere/sphere.obj");
 
-        m_model = std::make_unique<Model>("res/models/sponza/sponza.obj", "res/models/sponza/");
+        m_sponzaModel = std::make_unique<Model>("res/models/sponza/sponza.obj", "res/models/sponza/");
         m_scale = 0.03f;
         m_rotation = {0.0f, 90.0f, 0.0f};
 
@@ -48,16 +47,23 @@ namespace Demo {
 
     void DemoModelLoader::onUpdate(float deltaTime) {
 
-        m_camera->update();
+        m_camera->update(deltaTime);
 
         // Transformations
-        m_model->setPosition(m_position);
-        m_model->setRotation(m_rotation);
-        m_model->setScale({m_scale, m_scale, m_scale});
+        m_sponzaModel->setPosition(m_position);
+        m_sponzaModel->setRotation(m_rotation);
+        m_sponzaModel->setScale({m_scale, m_scale, m_scale});
+
+        if (m_mandoRotation.y > 359.0f)
+            m_mandoRotation.y = 0.0f;
+        else
+            m_mandoRotation.y += deltaTime * 10;
+
+        m_mandoModel->setPosition({0.0f, 5.0f, 0.0f});
+        m_mandoModel->setRotation(m_mandoRotation);
+        m_mandoModel->setScale({0.25f, 0.25f, 0.25f});
 
         m_pointLight->setPosition(m_pointLightPosition);
-
-
     }
 
     void DemoModelLoader::onRender() {
@@ -80,7 +86,8 @@ namespace Demo {
         m_modelShader->unbind();
 
         /* Draw models */
-        m_model->draw(m_camera->getProjectionMatrix(), m_camera->getViewMatrix(), m_modelShader);
+        m_sponzaModel->draw(m_camera->getProjectionMatrix(), m_camera->getViewMatrix(), m_modelShader);
+        m_mandoModel->draw(m_camera->getProjectionMatrix(), m_camera->getViewMatrix(), m_modelShader);
         m_pointLight->drawModel(m_camera->getProjectionMatrix(), m_camera->getViewMatrix(), m_lightShader);
     }
 
@@ -91,7 +98,7 @@ namespace Demo {
         ImGui::Text("Transform");
         ImGui::SliderFloat3("Position", &m_position[0], -10.0f, 10.0f);
         ImGui::SliderFloat3("° Rotation", &m_rotation[0], -360.0f, 360.0f);
-        ImGui::SliderFloat("Scale", &m_scale, 0.0f, 10.0f);
+        ImGui::SliderFloat("Scale", &m_scale, 0.0f, 1.0f);
 
         ImGui::Text("Lighting");
         ImGui::SliderFloat3("Point light - Position", &m_pointLightPosition.x, -40.0f, 40.0f);

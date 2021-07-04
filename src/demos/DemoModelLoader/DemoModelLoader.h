@@ -35,12 +35,15 @@ namespace Demo {
 
         std::shared_ptr<Shader> m_modelShader;
         std::shared_ptr<Shader> m_lightShader;
-        std::unique_ptr<Model> m_model;
+
+        std::unique_ptr<Model> m_sponzaModel;
+        std::unique_ptr<Model> m_mandoModel;
 
         std::unique_ptr<PointLight> m_pointLight;
 
         glm::vec3 m_position = {0.0f, 0.0f, 0.0f};
         glm::vec3 m_rotation = {0.0f, 0.0f, 0.0f};
+        glm::vec3 m_mandoRotation = {0.0f, 0.0f, 0.0f};
         float m_scale = 1.0f;
 
         glm::vec3 m_pointLightPosition = {0.0f, 0.0f, 0.0f};

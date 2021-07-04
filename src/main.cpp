@@ -79,8 +79,15 @@ int main(void) {
     Demo::Settings demoObjLoaderSettings("Model Loader", viewPortSize);
     demoMenu->registerDemo<Demo::DemoModelLoader>(demoObjLoaderSettings, inputManager);
 
+    // Frame timer
+    float deltaFrameTime;
+    float lastFrameTime = 0.0f;
+
     /* RENDER LOOP */
     while (!glfwWindowShouldClose(window)) {
+        auto currentFrameTime = (float) glfwGetTime();
+        deltaFrameTime = currentFrameTime - lastFrameTime;
+        lastFrameTime = currentFrameTime;
 
         GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         Renderer::clear();
@@ -89,7 +96,7 @@ int main(void) {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         if (currentDemo) {
-            currentDemo->onUpdate(0.0f);
+            currentDemo->onUpdate(deltaFrameTime);
             currentDemo->onRender();
             ImGui::Begin("Demos");
             if (currentDemo != demoMenu && ImGui::Button("Back")) {

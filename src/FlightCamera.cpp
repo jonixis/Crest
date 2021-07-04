@@ -8,12 +8,9 @@ FlightCamera::FlightCamera(glm::uvec2 viewPortSize, glm::vec3 position, glm::vec
     m_yaw = glm::degrees(atan2(m_forward.y, m_forward.x));
 }
 
-void FlightCamera::update() {
-    auto currentFrameTime = (float) glfwGetTime();
-    m_deltaFrameTime = currentFrameTime - m_lastFrameTime;
-    m_lastFrameTime = currentFrameTime;
+void FlightCamera::update(float deltaTime) {
 
-    const float cameraSpeed = 5.0f * m_deltaFrameTime;
+    const float cameraSpeed = 5.0f * deltaTime;
 
     // Process keyboard input
     if (m_inputManager->isKeyPressed(GLFW_KEY_W)) {
