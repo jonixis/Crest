@@ -3,7 +3,7 @@
 
 PointLight::PointLight(const std::string &modelFilePath) {
     m_model = std::make_unique<Model>(modelFilePath);
-    m_model->setScale({0.5f, 0.5f, 0.5f});
+//    m_model->setScale({0.5f, 0.5f, 0.5f});
 }
 
 PointLight::~PointLight() {
@@ -39,7 +39,10 @@ void PointLight::setAttQuadratic(const float attQuadratics) {
     m_attQuadratic = attQuadratics;
 }
 
-void PointLight::drawModel(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix,
-                           std::shared_ptr<Shader> shader) const {
+void PointLight::drawModel(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix,
+                           const std::shared_ptr<Shader>& shader) const {
+    shader->bind();
+    shader->setUniform3f("u_color", m_diffuse);
+
     m_model->draw(projectionMatrix, viewMatrix, shader, false);
 }

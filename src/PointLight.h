@@ -41,7 +41,7 @@ public:
 
 
     void
-    drawModel(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix, std::shared_ptr<Shader> shader) const;
+    drawModel(const glm::mat4 &projectionMatrix, const glm::mat4 &viewMatrix, const std::shared_ptr<Shader>& shader) const;
 
 private:
 

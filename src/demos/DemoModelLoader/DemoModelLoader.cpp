@@ -30,6 +30,9 @@ namespace Demo {
         m_pointLight = std::make_unique<PointLight>();
         m_pointLightPosition = {0.0f, 9.0f, 7.0f};
         m_pointLight->setPosition(m_pointLightPosition);
+        m_pointLightAmbient = m_pointLight->getAmbient();
+        m_pointLightDiffuse = m_pointLight->getDiffuse();
+        m_pointLightSpecular = m_pointLight->getSpecular();
 
         m_modelShader = std::make_shared<Shader>("shaders/blinnPhong");
         m_lightShader = std::make_shared<Shader>("shaders/light");
@@ -61,9 +64,12 @@ namespace Demo {
 
         m_mandoModel->setPosition({0.0f, 5.0f, 0.0f});
         m_mandoModel->setRotation(m_mandoRotation);
-        m_mandoModel->setScale({0.25f, 0.25f, 0.25f});
+        m_mandoModel->setScale({0.2f, 0.2f, 0.2f});
 
         m_pointLight->setPosition(m_pointLightPosition);
+        m_pointLight->setAmbient(m_pointLightAmbient);
+        m_pointLight->setDiffuse(m_pointLightDiffuse);
+        m_pointLight->setSpecular(m_pointLightSpecular);
     }
 
     void DemoModelLoader::onRender() {
@@ -93,6 +99,7 @@ namespace Demo {
 
     void DemoModelLoader::onImGuiRender() {
         ImGui::Text("Demo Model Loader");
+
         ImGui::NewLine();
 
         ImGui::Text("Transform");
@@ -100,8 +107,13 @@ namespace Demo {
         ImGui::SliderFloat3("° Rotation", &m_rotation[0], -360.0f, 360.0f);
         ImGui::SliderFloat("Scale", &m_scale, 0.0f, 1.0f);
 
+        ImGui::NewLine();
+
         ImGui::Text("Lighting");
-        ImGui::SliderFloat3("Point light - Position", &m_pointLightPosition.x, -40.0f, 40.0f);
+        ImGui::SliderFloat3("Light position", &m_pointLightPosition.x, -40.0f, 40.0f);
+        ImGui::ColorEdit3("Ambient", &m_pointLightAmbient[0]);
+        ImGui::ColorEdit3("Diffuse", &m_pointLightDiffuse[0]);
+        ImGui::ColorEdit3("Specular", &m_pointLightSpecular[0]);
 
         // ImGui::Text("Material");
         // ImGui::SliderFloat("Shininess", &m_material.shininess, 1.0, 256);

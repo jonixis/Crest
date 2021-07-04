@@ -47,6 +47,9 @@ namespace Demo {
         float m_scale = 1.0f;
 
         glm::vec3 m_pointLightPosition = {0.0f, 0.0f, 0.0f};
+        glm::vec3 m_pointLightAmbient;
+        glm::vec3 m_pointLightDiffuse;
+        glm::vec3 m_pointLightSpecular;
 
     };
 
