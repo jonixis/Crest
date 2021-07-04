@@ -57,16 +57,16 @@ target_link_libraries(${PROJECT_NAME} PRIVATE stb_image)
 add_subdirectory(${libs_dir}/tinyobjloader)
 target_link_libraries(${PROJECT_NAME} PRIVATE tinyobjloader)
 
-# Copy resources to build folder
+# Create symlink for resources in build folder after each build. Warning: Probably not working on windows
 add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        COMMAND ${CMAKE_COMMAND} -E create_symlink
         ${PROJECT_SOURCE_DIR}/res/
         $<TARGET_FILE_DIR:${PROJECT_NAME}>/res)
 
-# Copy shaders to build folder
+# Create symlink for shaders in build folder after each build. Warning: Probably not working on windows
 add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        COMMAND ${CMAKE_COMMAND} -E create_symlink
         ${PROJECT_SOURCE_DIR}/shaders/
         $<TARGET_FILE_DIR:${PROJECT_NAME}>/shaders)
