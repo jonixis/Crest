@@ -19,7 +19,7 @@ namespace Demo {
         // m_model = std::make_unique<Model>("res/models/newell_teaset/spoon.obj");
         // m_model = std::make_unique<Model>("res/models/newell_teaset/teacup.obj");
         // m_model = std::make_unique<Model>("res/models/newell_teaset/teapot.obj");
-         m_mandoModel = std::make_unique<Model>("res/models/mandalorian/mando-helmet.obj");
+        m_mandoModel = std::make_unique<Model>("res/models/arosa/arosaGIS.obj", "res/models/arosa/");
         // m_model = std::make_unique<Model>("res/models/sphere/sphere.obj");
 
         m_sponzaModel = std::make_unique<Model>("res/models/sponza/sponza.obj", "res/models/sponza/");
@@ -64,7 +64,7 @@ namespace Demo {
 
         m_mandoModel->setPosition({0.0f, 5.0f, 0.0f});
         m_mandoModel->setRotation(m_mandoRotation);
-        m_mandoModel->setScale({0.2f, 0.2f, 0.2f});
+        m_mandoModel->setScale({0.003f, 0.003f, 0.003f});
 
         m_pointLight->setPosition(m_pointLightPosition);
         m_pointLight->setAmbient(m_pointLightAmbient);
